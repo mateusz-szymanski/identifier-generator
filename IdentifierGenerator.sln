@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Domain", "IdentifierGenerator.Domain\IdentifierGenerator.Domain.csproj", "{B56910C5-85F8-4632-B3BE-AE4AC0FA12CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Domain.Tests", "IdentifierGenerator.Domain.Tests\IdentifierGenerator.Domain.Tests.csproj", "{C39FC7B8-E30B-4778-B0BD-F395F23BF682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentifierGenerator.Infrastructure", "IdentifierGenerator.Infrastructure\IdentifierGenerator.Infrastructure.csproj", "{D274A8A4-7599-43B0-BBBF-9C59FC77A6D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Infrastructure", "IdentifierGenerator.Infrastructure\IdentifierGenerator.Infrastructure.csproj", "{D274A8A4-7599-43B0-BBBF-9C59FC77A6D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentifierGenerator.Application", "IdentifierGenerator.Application\IdentifierGenerator.Application.csproj", "{C40BBF08-503F-48DB-B2B0-E98AE56E6497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Application", "IdentifierGenerator.Application\IdentifierGenerator.Application.csproj", "{C40BBF08-503F-48DB-B2B0-E98AE56E6497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentifierGenerator.Application.Tests", "IdentifierGenerator.Application.Tests\IdentifierGenerator.Application.Tests.csproj", "{79FB60C6-2ECD-4625-BDB7-F309C371A002}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Application.Tests", "IdentifierGenerator.Application.Tests\IdentifierGenerator.Application.Tests.csproj", "{79FB60C6-2ECD-4625-BDB7-F309C371A002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentifierGenerator.Web", "IdentifierGenerator.Web\IdentifierGenerator.Web.csproj", "{7682C489-7C18-4ABF-B31A-2281213BA6F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Web", "IdentifierGenerator.Web\IdentifierGenerator.Web.csproj", "{7682C489-7C18-4ABF-B31A-2281213BA6F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentifierGenerator.Bootstrap", "IdentifierGenerator.Bootstrap\IdentifierGenerator.Bootstrap.csproj", "{5BE9B583-2817-47DA-9C61-DE3E1D266D4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Bootstrap", "IdentifierGenerator.Bootstrap\IdentifierGenerator.Bootstrap.csproj", "{5BE9B583-2817-47DA-9C61-DE3E1D266D4E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9A537F4B-75FB-4FBA-8DFE-F587FAED9392}"
 EndProject
