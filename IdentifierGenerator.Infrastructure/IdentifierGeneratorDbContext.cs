@@ -1,0 +1,26 @@
+﻿using IdentifierGenerator.Infrastructure.Maps;
+using IdentifierGenerator.Model.Domain;
+using Microsoft.EntityFrameworkCore;
+using System;
+
+namespace IdentifierGenerator.Infrastructure
+{
+    public class IdentifierGeneratorDbContext : DbContext
+    {
+        protected IdentifierGeneratorDbContext()
+        { }
+
+        public IdentifierGeneratorDbContext(DbContextOptions dbContextOptions)
+            : base(dbContextOptions)
+        { }
+
+        public DbSet<Identifier> Identifier { get; set; }
+        public DbSet<IdentifierGenerated> IdentifierGenerated { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new IdentifierMap());
+            modelBuilder.ApplyConfiguration(new IdentifierGeneratedMap());
+        }
+    }
+}
