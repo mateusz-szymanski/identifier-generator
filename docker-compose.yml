@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  identifiergenerator.webapi:
+    image: ${DOCKER_REGISTRY-}identifiergeneratorwebapi
+    depends_on:
+      - sqldb
+    build:
+      context: .
+      dockerfile: IdentifierGenerator.WebApi/Dockerfile
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+        ACCEPT_EULA: "Y"
+        SA_PASSWORD: "kask7HsAzaXzG"
+#    ports:
+#      - 1433:1433
