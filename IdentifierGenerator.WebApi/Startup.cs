@@ -29,10 +29,15 @@ namespace IdentifierGenerator.WebApi
         {
             Bootstrapper.ConfigureServices(services, Configuration.GetConnectionString("IdentifierGeneratorContext"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHealthChecks()
+                .AddDbContextCheck<IdentifierGeneratorDbContext>("dbContext");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseHealthChecks("/health");
+
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<IdentifierGeneratorDbContext>();
