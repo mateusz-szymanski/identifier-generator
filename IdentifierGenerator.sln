@@ -23,6 +23,11 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IdentifierGenerator.WebClientAngularJs", "IdentifierGenerator.WebClientAngularJs\IdentifierGenerator.WebClientAngularJs.njsproj", "{36472851-D5A0-4D24-9B7F-729CC6884F8F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{411EEB26-1C26-4E77-B8D3-0A97F59920FB}"
+	ProjectSection(SolutionItems) = preProject
+		ef-scripts.txt = ef-scripts.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

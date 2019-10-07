@@ -4,7 +4,11 @@ namespace IdentifierGenerator.Model.Domain
 {
     public class Identifier
     {
-        protected Identifier() { }
+        protected Identifier()
+        {
+            FactoryCode = string.Empty;
+            CategoryCode = string.Empty;
+        }
 
         public Identifier(string factoryCode, string categoryCode)
         {

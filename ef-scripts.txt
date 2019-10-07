@@ -1,0 +1,3 @@
+dotnet ef database update -p ./IdentifierGenerator.Infrastructure -s ./IdentifierGenerator.WebApi -v
+
+dotnet ef migrations add MigrationName -p ./IdentifierGenerator.Infrastructure -s ./IdentifierGenerator.WebApi -v

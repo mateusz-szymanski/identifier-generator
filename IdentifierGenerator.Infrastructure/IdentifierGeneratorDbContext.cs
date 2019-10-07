@@ -14,8 +14,8 @@ namespace IdentifierGenerator.Infrastructure
             : base(dbContextOptions)
         { }
 
-        public DbSet<Identifier> Identifier { get; set; }
-        public DbSet<IdentifierGenerated> IdentifierGenerated { get; set; }
+        public DbSet<Identifier> Identifier { get; set; } = null!;
+        public DbSet<IdentifierGenerated> IdentifierGenerated { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
