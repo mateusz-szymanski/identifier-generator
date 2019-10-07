@@ -7,9 +7,16 @@ var logger = require('morgan');
 
 var app = express();
 
-app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use("/mainApp", express.static(__dirname + "/public/mainApp"));
+app.use("/lib", express.static(__dirname + "/public/lib"));
+app.use("/site.css", express.static(__dirname + "/public/site.css"));
+
+app.all("/*", function (req, res, next) {
+    res.sendFile("Index.html", { root: __dirname + "/public" });
+});
 
 app.set('port', process.env.PORT || 3000);
 
