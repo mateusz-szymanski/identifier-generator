@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -28,7 +29,8 @@ namespace IdentifierGenerator.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             Bootstrapper.ConfigureServices(services, Configuration.GetConnectionString("IdentifierGeneratorContext"));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddControllers();
 
             services.AddHealthChecks()
                 .AddDbContextCheck<IdentifierGeneratorDbContext>("dbContext");
@@ -42,7 +44,7 @@ namespace IdentifierGenerator.WebApi
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseHealthChecks("/health");
 
@@ -62,8 +64,15 @@ namespace IdentifierGenerator.WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseCors();
-            app.UseMvc();
+
+            //app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
