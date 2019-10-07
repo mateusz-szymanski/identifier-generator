@@ -1,5 +1,5 @@
 {
-  "name": "identifiergeneratorweb.angularjs",
+  "name": "identifier-generator.web.angularjs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
   },
   "description": "IdentifierGenerator.Web.AngularJs",
   "author": {
-    "name": "Mateusz Szyma?ski"
+    "name": "Mateusz Szymanski"
   },
   "dependencies": {
     "debug": "^2.2.0",
