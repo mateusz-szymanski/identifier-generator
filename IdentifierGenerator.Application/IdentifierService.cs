@@ -1,6 +1,5 @@
 ﻿using IdentifierGenerator.Domain;
 using IdentifierGenerator.Model.Domain;
-using System;
 
 namespace IdentifierGenerator.Application
 {

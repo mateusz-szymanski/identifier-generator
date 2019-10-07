@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using IdentifierGenerator.Domain;
 using IdentifierGenerator.Model.Domain;
-using IdentifierGenerator.Domain;
+using System.Linq;
 
 namespace IdentifierGenerator.Infrastructure
 {

@@ -1,5 +1,4 @@
 using IdentifierGenerator.Model.Domain;
-using System;
 using Xunit;
 
 namespace IdentifierGenerator.Domain.UnitTests

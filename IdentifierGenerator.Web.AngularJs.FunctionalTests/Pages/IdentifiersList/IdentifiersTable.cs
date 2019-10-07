@@ -1,9 +1,5 @@
-﻿using IdentifierGenerator.Web.AngularJs.FunctionalTests.Helpers;
+﻿using IdentifierGenerator.Web.AngularJs.FunctionalTests.Extensions;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace IdentifierGenerator.Web.AngularJs.FunctionalTests.Pages.IdentifiersList
 {

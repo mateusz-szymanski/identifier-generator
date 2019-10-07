@@ -1,7 +1,6 @@
 ﻿using IdentifierGenerator.Infrastructure.Maps;
 using IdentifierGenerator.Model.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace IdentifierGenerator.Infrastructure
 {

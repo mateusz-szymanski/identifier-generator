@@ -2,13 +2,12 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace IdentifierGenerator.Web.AngularJs.FunctionalTests.Helpers
+namespace IdentifierGenerator.Web.AngularJs.FunctionalTests.Extensions
 {
     static class WebDriverExtensions
     {
-        private static TimeSpan _defaultTimeoutTimeSpan = TimeSpan.FromSeconds(2);
+        private static readonly TimeSpan _defaultTimeoutTimeSpan = TimeSpan.FromSeconds(2);
 
         public static IWebElement WaitForElement(this IWebDriver webDriver, By by)
         {

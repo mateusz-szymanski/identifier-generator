@@ -1,15 +1,8 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.IO;
-using System.Reflection;
-using Xunit;
-using IdentifierGenerator.Web.AngularJs.FunctionalTests.Helpers;
+using IdentifierGenerator.Web.AngularJs.FunctionalTests.Extensions;
 using IdentifierGenerator.Web.AngularJs.FunctionalTests.Pages;
 using IdentifierGenerator.Web.AngularJs.FunctionalTests.Pages.IdentifiersList;
+using System;
+using Xunit;
 
 namespace IdentifierGenerator.Web.AngularJs.FunctionalTests
 {

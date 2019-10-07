@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using IdentifierGenerator.Application;
+﻿using IdentifierGenerator.Application;
 using IdentifierGenerator.Infrastructure.Queries;
 using Microsoft.AspNetCore.Mvc;
 

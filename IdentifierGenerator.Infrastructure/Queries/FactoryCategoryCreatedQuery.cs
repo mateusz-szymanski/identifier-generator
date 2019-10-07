@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+﻿using System.Linq;
 
 namespace IdentifierGenerator.Infrastructure.Queries
 {
     public class AllIdentifierQuery
     {
-        private IdentifierGeneratorDbContext _dbContext;
+        private readonly IdentifierGeneratorDbContext _dbContext;
 
         public AllIdentifierQuery(IdentifierGeneratorDbContext identifierGeneratorDbContext)
         {

@@ -1,11 +1,9 @@
-﻿using Autofac;
-using IdentifierGenerator.Application;
+﻿using IdentifierGenerator.Application;
 using IdentifierGenerator.Domain;
 using IdentifierGenerator.Infrastructure;
 using IdentifierGenerator.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace IdentifierGenerator.Bootstrap
 {

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace IdentifierGenerator.Infrastructure.Queries
 {
     public class FactoryCategoryGeneratedIdentifiersQuery
     {
-        private IdentifierGeneratorDbContext _dbContext;
+        private readonly IdentifierGeneratorDbContext _dbContext;
 
         public FactoryCategoryGeneratedIdentifiersQuery(IdentifierGeneratorDbContext identifierGeneratorDbContext)
         {
