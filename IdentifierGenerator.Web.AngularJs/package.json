@@ -1,11 +1,11 @@
 {
-  "name": "basic_node_template",
+  "name": "identifiergeneratorweb.angularjs",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node app"
   },
-  "description": "Basic_node_template",
+  "description": "IdentifierGenerator.Web.AngularJs",
   "author": {
     "name": "Mateusz Szyma?ski"
   },
