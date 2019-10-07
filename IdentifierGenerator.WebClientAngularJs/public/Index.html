@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Identifier Generator</title>
+
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/lib/ng-table/ng-table.min.css">
+    <link rel="stylesheet" href="/site.css" />
+
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand">Identifier Generator</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+
+        <div ng-app="mainApp">
+            <ng-view></ng-view>
+        </div>
+
+        <hr />
+        <footer>
+            <p>&copy; 2018 - Identifier Generator</p>
+        </footer>
+    </div>
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/angular.js/angular.min.js"></script>
+    <script src="/lib/angular.js/angular-route.min.js"></script>
+    <script src="/lib/ng-table/ng-table.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="/mainApp/app.js"></script>
+    <script src="/mainApp/factoryList/factoryList.js"></script>
+    <script src="/mainApp/factoryHistory/factoryHistory.js"></script>
+    <script src="/mainApp/newFactory/newFactory.js"></script>
+    <script src="/mainApp/identifierService.js"></script>
+    <script src="/mainApp/apiUrlBuilder.js"></script>
+
+</body>
+</html>

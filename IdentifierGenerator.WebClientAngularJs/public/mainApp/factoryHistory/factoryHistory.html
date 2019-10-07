@@ -1,0 +1,12 @@
+<table ng-table="$ctrl.tableParams" class="table">
+    <tr ng-repeat="element in $data">
+        <td title="'Created On'">
+            {{element.createdOn | date : 'yyyy-MM-dd HH:mm:ss Z'}}
+        </td>
+        <td title="'Code'">
+            {{element.code}}
+        </td>
+    </tr>
+</table>
+
+<button class="btn btn-secondary" ng-click="$ctrl.goBack()">Go back</button>

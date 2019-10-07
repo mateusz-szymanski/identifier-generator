@@ -32,6 +32,14 @@ namespace IdentifierGenerator.WebApi
 
             services.AddHealthChecks()
                 .AddDbContextCheck<IdentifierGeneratorDbContext>("dbContext");
+
+            services.AddCors(action =>
+            {
+                action.AddDefaultPolicy(policy => policy.AllowAnyOrigin()
+                                                        .AllowAnyMethod()
+                                                        .AllowAnyHeader()
+                );
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -54,6 +62,7 @@ namespace IdentifierGenerator.WebApi
             }
 
             app.UseHttpsRedirection();
+            app.UseCors();
             app.UseMvc();
         }
     }

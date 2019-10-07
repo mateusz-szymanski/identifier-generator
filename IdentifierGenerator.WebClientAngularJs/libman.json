@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "angular.js@1.7.8",
+      "destination": "public/lib/angular.js/",
+      "files": [
+        "angular.min.js",
+        "angular-route.min.js"
+      ]
+    },
+    {
+      "library": "ng-table@1.0.0",
+      "destination": "public/lib/ng-table/",
+      "files": [
+        "ng-table.min.js",
+        "ng-table.min.css"
+      ]
+    },
+    {
+      "provider": "unpkg",
+      "library": "bootstrap@3.4.0",
+      "destination": "public/lib/bootstrap/",
+      "files": [
+        "dist/css/bootstrap.min.css",
+        "dist/js/bootstrap.min.js"
+      ]
+    },
+    {
+      "library": "jquery@3.4.1",
+      "destination": "public/lib/jquery/",
+      "files": [
+        "jquery.min.js"
+      ]
+    }
+  ]
+}
