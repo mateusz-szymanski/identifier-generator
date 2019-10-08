@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Web.Ang
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IdentifierGenerator.Web.AngularJs", "IdentifierGenerator.Web.AngularJs\IdentifierGenerator.Web.AngularJs.njsproj", "{36472851-D5A0-4D24-9B7F-729CC6884F8F}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IdentifierGenerator.Web.Angular", "IdentifierGenerator.Web.Angular\IdentifierGenerator.Web.Angular.njsproj", "{F766726A-D684-4FE8-A5F1-164A47286939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{36472851-D5A0-4D24-9B7F-729CC6884F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36472851-D5A0-4D24-9B7F-729CC6884F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36472851-D5A0-4D24-9B7F-729CC6884F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F766726A-D684-4FE8-A5F1-164A47286939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F766726A-D684-4FE8-A5F1-164A47286939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F766726A-D684-4FE8-A5F1-164A47286939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F766726A-D684-4FE8-A5F1-164A47286939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
