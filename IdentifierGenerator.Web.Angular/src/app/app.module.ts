@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,6 +43,7 @@ import { IdentifierHistoryComponent } from './identifier-history/identifier-hist
     MatTableModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
     // MatDialogModule
   ],
   providers: [],
