@@ -5,24 +5,24 @@
   <table mat-table [dataSource]="dataSource" style="width: 100%;">
     <ng-container matColumnDef="factoryCode">
       <th mat-header-cell *matHeaderCellDef>Factory code</th>
-      <td mat-cell *matCellDef="let element">{{element.factory}}</td>
+      <td mat-cell *matCellDef="let element">{{element.factoryCode}}</td>
     </ng-container>
 
     <ng-container matColumnDef="categoryCode">
       <th mat-header-cell *matHeaderCellDef>Category code</th>
-      <td mat-cell *matCellDef="let element">{{element.category}}</td>
+      <td mat-cell *matCellDef="let element">{{element.categoryCode}}</td>
     </ng-container>
 
     <ng-container matColumnDef="currentValue">
       <th mat-header-cell *matHeaderCellDef>Current value</th>
-      <td mat-cell *matCellDef="let element">{{element.currentValue}}</td>
+      <td mat-cell *matCellDef="let element">{{element.value}}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button class="row-action-button" mat-raised-button color="accent">History</button>
-        <button class="row-action-button" mat-raised-button color="accent">Generate new</button>
+        <button class="row-action-button" mat-raised-button color="accent" [routerLink]="['/', element.factoryCode, element.categoryCode]" >History</button>
+        <button class="row-action-button" mat-raised-button color="accent" (click)="generateNew(element)">Generate new</button>
       </td>
     </ng-container>
 

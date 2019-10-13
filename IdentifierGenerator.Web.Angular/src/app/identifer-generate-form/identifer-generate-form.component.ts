@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
+import { IdentifierDataService } from '../identifier-data-service';
 
 @Component({
   selector: 'app-identifer-generate-form',
@@ -19,14 +20,14 @@ export class IdentiferGenerateFormComponent implements OnInit {
   @ViewChild('formRef', { static: false })
   private identifierFormRef: NgForm;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private identifierDataService: IdentifierDataService) { }
 
   ngOnInit() {
   }
 
   generateIdentifier() {
-    console.log(`factory: ${this.identifierForm.value.factoryName}`);
-    console.log(`category: ${this.identifierForm.value.categoryName}`);
+    this.identifierDataService.generateNewIdentifier(this.identifierForm.value.factoryName, this.identifierForm.value.categoryName)
+    .subscribe();
 
     this.identifierForm.reset();
     this.identifierFormRef.resetForm();

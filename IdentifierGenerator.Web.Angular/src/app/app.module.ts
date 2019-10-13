@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -18,16 +19,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { IdentiferGenerateFormComponent } from './identifer-generate-form/identifer-generate-form.component';
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
+import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IdentiferGenerateFormComponent,
-    IdentifierListComponent
+    IdentifierListComponent,
+    IdentifierHistoryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatInputModule,

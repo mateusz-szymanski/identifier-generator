@@ -1,3 +1,11 @@
 app-identifer-generate-form {
   width: 100%;
 }
+
+.application-header {
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+}
