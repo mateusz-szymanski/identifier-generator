@@ -2,10 +2,22 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
 import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
+import { IdentifierHistoryResolverService } from './identifier-history-resolver.service';
+import { IdentifierListResolverService } from './identifier-list-resolver.service';
 
 const routes: Routes = [
-  { path: "list", component: IdentifierListComponent },
-  { path: ":factoryCode/:categoryCode", component: IdentifierHistoryComponent },
+  {
+    path: "list", component: IdentifierListComponent,
+    resolve: {
+      identifiers: IdentifierListResolverService
+    }
+  },
+  {
+    path: ":factoryCode/:categoryCode", component: IdentifierHistoryComponent,
+    resolve: {
+      identifierHistory: IdentifierHistoryResolverService
+    }
+  },
   {
     path: "",
     redirectTo: '/list',

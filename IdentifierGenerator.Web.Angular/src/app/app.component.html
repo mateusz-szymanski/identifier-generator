@@ -10,7 +10,12 @@
   <mat-grid-tile colspan="2"></mat-grid-tile>
 </mat-grid-list>
 
-<router-outlet></router-outlet>
+<div class="router-outlet-container">
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+  <router-outlet></router-outlet>
+</div>
 
 <mat-divider></mat-divider>
 

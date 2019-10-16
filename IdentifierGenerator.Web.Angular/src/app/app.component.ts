@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ResolveStart, ResolveEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'identifier-generator-web-angular';
+  isLoading: boolean = false;
+
+  constructor(router: Router) {
+    router.events.subscribe((routerEvent: RouterEvent) => this.checkRouterEvent(routerEvent));
+  }
+
+  private checkRouterEvent(routerEvent: RouterEvent): void {
+    if (routerEvent instanceof ResolveStart) {
+      this.isLoading = true;
+    }
+
+    if (routerEvent instanceof ResolveEnd) {
+      this.isLoading = false;
+    }
+  }
 }

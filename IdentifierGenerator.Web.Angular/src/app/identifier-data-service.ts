@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { delay } from 'q';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
