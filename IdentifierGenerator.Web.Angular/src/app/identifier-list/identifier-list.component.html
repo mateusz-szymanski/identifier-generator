@@ -17,9 +17,9 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let element">
-      <button class="row-action-button" mat-raised-button color="accent"
+      <button class="mr-1" mat-raised-button color="accent"
         [routerLink]="['/', element.factoryCode, element.categoryCode]">History</button>
-      <button class="row-action-button" mat-raised-button color="accent" (click)="generateNew(element)">Generate
+      <button mat-raised-button color="accent" (click)="generateNew(element)">Generate
         new</button>
     </td>
   </ng-container>
