@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterEvent, ResolveStart, ResolveEnd } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { IdentifierGenerateFormComponent } from './identifier-generate-form/identifier-generate-form.component';
 
 @Component({
@@ -26,6 +26,7 @@ export class AppComponent {
   }
 
   openPopup() {
-    this.dialog.open(IdentifierGenerateFormComponent);
+    let config: MatDialogConfig = { disableClose: true };
+    this.dialog.open(IdentifierGenerateFormComponent, config);
   }
 }
