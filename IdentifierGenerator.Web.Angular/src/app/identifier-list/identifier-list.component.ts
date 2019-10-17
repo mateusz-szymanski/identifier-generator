@@ -6,6 +6,8 @@ import { Identifier } from '../identifier';
 import { IdentifierDataService } from '../identifier-data-service';
 import { ActivatedRoute } from '@angular/router';
 import { MessenagerService } from '../messenager.service';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { IdentifierGenerateFormComponent } from '../identifier-generate-form/identifier-generate-form.component';
 
 interface IdentifierEntry extends Identifier {
   isLoading: boolean;
@@ -25,7 +27,8 @@ export class IdentifierListComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private identifierDataService: IdentifierDataService,
-    private messenagerService: MessenagerService) { }
+    private messenagerService: MessenagerService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.messenagerService.identifierAddedMessage.subscribe(() => this.reload());
@@ -57,6 +60,11 @@ export class IdentifierListComponent implements OnInit {
         identifierEntry.value++;
         identifierEntry.isLoading = false;
       });
+  }
+
+  openPopup() {
+    let config: MatDialogConfig = { disableClose: true };
+    this.dialog.open(IdentifierGenerateFormComponent, config);
   }
 
 }

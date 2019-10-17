@@ -23,6 +23,7 @@ import { IdentifierGenerateFormComponent } from './identifier-generate-form/iden
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
 import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
     IdentifierGenerateFormComponent,
     IdentifierListComponent,
     IdentifierHistoryComponent,
-    LoadingOverlayComponent
+    LoadingOverlayComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

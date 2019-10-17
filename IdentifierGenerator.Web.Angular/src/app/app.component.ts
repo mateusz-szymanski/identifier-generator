@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterEvent, ResolveStart, ResolveEnd } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { IdentifierGenerateFormComponent } from './identifier-generate-form/identifier-generate-form.component';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +9,7 @@ import { IdentifierGenerateFormComponent } from './identifier-generate-form/iden
 export class AppComponent {
   isLoading: boolean = false;
 
-  constructor(private dialog: MatDialog, router: Router) {
+  constructor(router: Router) {
     router.events.subscribe((routerEvent: RouterEvent) => this.checkRouterEvent(routerEvent));
   }
 
@@ -23,10 +21,5 @@ export class AppComponent {
     if (routerEvent instanceof ResolveEnd) {
       this.isLoading = false;
     }
-  }
-
-  openPopup() {
-    let config: MatDialogConfig = { disableClose: true };
-    this.dialog.open(IdentifierGenerateFormComponent, config);
   }
 }
