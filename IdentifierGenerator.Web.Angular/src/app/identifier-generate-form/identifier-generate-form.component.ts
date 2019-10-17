@@ -18,6 +18,8 @@ export class IdentifierGenerateFormComponent {
   get factoryName() { return this.identifierForm.get('factoryName'); }
   get categoryName() { return this.identifierForm.get('categoryName'); }
 
+  isLoading: boolean = false;
+
   @ViewChild('formRef', { static: false })
   private identifierFormRef: NgForm;
 
@@ -30,11 +32,13 @@ export class IdentifierGenerateFormComponent {
     let factoryName = this.identifierForm.value.factoryName;
     let categoryName = this.identifierForm.value.categoryName;
 
+    this.isLoading = true;
     this.identifierDataService.generateNewIdentifier(factoryName, categoryName)
       .subscribe(() => {
         this.identifierForm.reset();
         this.identifierFormRef.resetForm();
         this.dialogRef.close({ factoryName: factoryName, categoryName: categoryName });
+        this.isLoading = false;
       });
   }
 
