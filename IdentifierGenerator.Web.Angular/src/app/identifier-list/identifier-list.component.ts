@@ -6,6 +6,10 @@ import { Identifier } from '../identifier';
 import { IdentifierDataService } from '../identifier-data-service';
 import { ActivatedRoute } from '@angular/router';
 
+interface IdentifierEntry extends Identifier {
+  isLoading: boolean;
+}
+
 @Component({
   selector: 'app-identifier-list',
   templateUrl: './identifier-list.component.html',
@@ -13,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class IdentifierListComponent implements OnInit {
   visibleColumns = ['factoryCode', 'categoryCode', 'currentValue', 'actions'];
-  dataSource = new MatTableDataSource<Identifier>();
+  dataSource = new MatTableDataSource<IdentifierEntry>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -21,15 +25,23 @@ export class IdentifierListComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.data.subscribe((data: { identifiers: Identifier[] }) => {
-      this.dataSource = new MatTableDataSource<Identifier>(data.identifiers);
+      let extendedData = data.identifiers.map((el) => {
+        return { isLoading: false, ...el };
+      });
+
+      this.dataSource = new MatTableDataSource<IdentifierEntry>(extendedData);
       this.dataSource.paginator = this.paginator;
     });
   }
 
-  generateNew(identifier: Identifier) {
+  generateNew(identifierEntry: IdentifierEntry) {
+    identifierEntry.isLoading = true;
     this.identifierDataService
-      .generateNewIdentifier(identifier.factoryCode, identifier.categoryCode)
-      .subscribe(() => identifier.value++);
+      .generateNewIdentifier(identifierEntry.factoryCode, identifierEntry.categoryCode)
+      .subscribe(() => {
+        identifierEntry.value++;
+        identifierEntry.isLoading = false;
+      });
   }
 
 }
