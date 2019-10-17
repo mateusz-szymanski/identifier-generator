@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 
-import { Identifier } from './identifier-history-entry';
-import { IdentifierHistoryEntry } from './identifier';
+import { Identifier } from './identifier';
+import { IdentifierHistoryEntry } from './identifier-history-entry';
 import { Observable, throwError } from 'rxjs';
 
 @Injectable({

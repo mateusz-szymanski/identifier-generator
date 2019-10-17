@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IdentifierHistoryEntry } from '../identifier';
+import { IdentifierHistoryEntry } from '../identifier-history-entry';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, ParamMap } from '@angular/router';

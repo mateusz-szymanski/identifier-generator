@@ -2,13 +2,13 @@
   <div class="row justify-content-center no-gutters">
     <div class="col">
       <mat-toolbar color="primary">
-        <span class="application-header" routerLink="/">Identifier generator</span>
+        <button mat-flat-button class="application-header text-uppercase" color="primary" routerLink="/">Identifier
+          generator</button>
+        <button mat-flat-button color="primary" routerLink="/">Home</button>
+
+          <button mat-flat-button color="primary" (click)="openPopup()">Generate
+            new<mat-icon>add</mat-icon></button>
       </mat-toolbar>
-    </div>
-  </div>
-  <div class="row justify-content-center no-gutters">
-    <div class="col-10 mt-2">
-      <app-identifer-generate-form></app-identifer-generate-form>
     </div>
   </div>
   <div class="row justify-content-center no-gutters">
@@ -24,10 +24,11 @@
   <div class="row justify-content-center no-gutters">
     <div class="col">
       <mat-divider></mat-divider>
-
       <footer>
         © 2019 - Identifier Generator
       </footer>
     </div>
   </div>
 </div>
+
+<router-outlet name="popup"></router-outlet>

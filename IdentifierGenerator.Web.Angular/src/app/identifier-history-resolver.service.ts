@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IdentifierHistoryEntry } from './identifier';
+import { IdentifierHistoryEntry } from './identifier-history-entry';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { IdentifierDataService } from './identifier-data-service';

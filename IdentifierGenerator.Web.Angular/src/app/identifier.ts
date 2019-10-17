@@ -1,4 +1,5 @@
-export interface IdentifierHistoryEntry {
-  createdOn: Date,
-  code: string
+export interface Identifier {
+  factoryCode: string;
+  categoryCode: string;
+  value: number;
 }

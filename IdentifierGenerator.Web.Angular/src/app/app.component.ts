@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ResolveStart, ResolveEnd } from '@angular/router';
+import { Router, RouterEvent, ResolveStart, ResolveEnd } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { IdentifierGenerateFormComponent } from './identifier-generate-form/identifier-generate-form.component';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,7 @@ import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, 
 export class AppComponent {
   isLoading: boolean = false;
 
-  constructor(router: Router) {
+  constructor(private dialog: MatDialog, router: Router) {
     router.events.subscribe((routerEvent: RouterEvent) => this.checkRouterEvent(routerEvent));
   }
 
@@ -21,5 +23,17 @@ export class AppComponent {
     if (routerEvent instanceof ResolveEnd) {
       this.isLoading = false;
     }
+  }
+
+  openPopup() {
+    let dialogRef = this.dialog.open(IdentifierGenerateFormComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        let { factoryName, categoryName } = result;
+        if (factoryName && categoryName) {
+          //reload list
+        }
+      }
+    });
   }
 }

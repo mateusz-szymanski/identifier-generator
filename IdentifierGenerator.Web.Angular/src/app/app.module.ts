@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,14 +19,14 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { IdentiferGenerateFormComponent } from './identifer-generate-form/identifer-generate-form.component';
+import { IdentifierGenerateFormComponent } from './identifier-generate-form/identifier-generate-form.component';
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
 import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    IdentiferGenerateFormComponent,
+    IdentifierGenerateFormComponent,
     IdentifierListComponent,
     IdentifierHistoryComponent
   ],
@@ -44,9 +45,11 @@ import { IdentifierHistoryComponent } from './identifier-history/identifier-hist
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatDividerModule,
-    // MatDialogModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [IdentifierGenerateFormComponent]
 })
 export class AppModule { }

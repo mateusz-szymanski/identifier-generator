@@ -1,0 +1,28 @@
+<form [formGroup]="identifierForm" (ngSubmit)="generateIdentifier()" autocomplete="off" #formRef="ngForm">
+    <h1 mat-dialog-title>
+      Generate new code
+    </h1>
+    <div mat-dialog-content>
+      <mat-form-field class="w-100 p-2">
+        <input matInput placeholder="Factory" formControlName="factoryName" required maxlength="30" />
+        <mat-hint>Max 30 characters</mat-hint>
+        <mat-error *ngIf="factoryName.invalid && factoryName.hasError('required')">You must enter a value
+        </mat-error>
+        <mat-error *ngIf="factoryName.invalid && factoryName.hasError('maxlength')">You must enter max 30
+          characters
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100 p-2">
+        <input matInput placeholder="Category" formControlName="categoryName" required maxlength="30" />
+        <mat-hint>Max 30 characters</mat-hint>
+        <mat-error *ngIf="categoryName.invalid && categoryName.hasError('required')">You must enter a value
+        </mat-error>
+        <mat-error *ngIf="categoryName.invalid && categoryName.hasError('maxlength')">You must enter max 30
+          characters</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button class="m-2" mat-raised-button type="submit" [disabled]="!identifierForm.valid">Submit</button>
+      <button class="m-2" mat-raised-button mat-dialog-close>Cancel</button>
+    </div>
+  </form>

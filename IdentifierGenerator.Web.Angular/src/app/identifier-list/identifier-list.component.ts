@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 
-import { Identifier } from '../identifier-history-entry';
+import { Identifier } from '../identifier';
 import { IdentifierDataService } from '../identifier-data-service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -27,7 +27,8 @@ export class IdentifierListComponent implements OnInit {
   }
 
   generateNew(identifier: Identifier) {
-    this.identifierDataService.generateNewIdentifier(identifier.factoryCode, identifier.categoryCode)
+    this.identifierDataService
+      .generateNewIdentifier(identifier.factoryCode, identifier.categoryCode)
       .subscribe(() => identifier.value++);
   }
 
