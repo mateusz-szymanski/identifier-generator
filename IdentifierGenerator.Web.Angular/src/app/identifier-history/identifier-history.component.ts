@@ -11,7 +11,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class IdentifierHistoryComponent implements OnInit {
   dataSource: MatTableDataSource<IdentifierHistoryEntry>;
-  visibleColumns = ['createdOn', 'code'];
+  visibleColumns = ['code', 'createdOn'];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 

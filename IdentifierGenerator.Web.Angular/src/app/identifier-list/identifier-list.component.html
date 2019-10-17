@@ -7,22 +7,22 @@
 
   <table mat-table [dataSource]="dataSource" style="width: 100%;">
     <ng-container matColumnDef="factoryCode">
-      <th mat-header-cell *matHeaderCellDef>Factory code</th>
+      <th mat-header-cell *matHeaderCellDef class="w-25">Factory code</th>
       <td mat-cell *matCellDef="let element">{{element.factoryCode}}</td>
     </ng-container>
 
     <ng-container matColumnDef="categoryCode">
-      <th mat-header-cell *matHeaderCellDef>Category code</th>
+      <th mat-header-cell *matHeaderCellDef class="w-25">Category code</th>
       <td mat-cell *matCellDef="let element">{{element.categoryCode}}</td>
     </ng-container>
 
     <ng-container matColumnDef="currentValue">
-      <th mat-header-cell *matHeaderCellDef>Current value</th>
+      <th mat-header-cell *matHeaderCellDef class="w-25">Current value</th>
       <td mat-cell *matCellDef="let element">{{element.value}}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
+      <th mat-header-cell *matHeaderCellDef class="w-25"></th>
       <td mat-cell *matCellDef="let element">
         <button class="mr-1" mat-raised-button color="accent"
           [routerLink]="['/identifier', element.factoryCode, element.categoryCode]">History</button>
