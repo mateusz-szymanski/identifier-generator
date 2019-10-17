@@ -22,13 +22,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IdentifierGenerateFormComponent } from './identifier-generate-form/identifier-generate-form.component';
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
 import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
+import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IdentifierGenerateFormComponent,
     IdentifierListComponent,
-    IdentifierHistoryComponent
+    IdentifierHistoryComponent,
+    LoadingOverlayComponent
   ],
   imports: [
     BrowserModule,
