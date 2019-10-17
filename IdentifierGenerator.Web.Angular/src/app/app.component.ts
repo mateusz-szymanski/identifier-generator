@@ -26,14 +26,6 @@ export class AppComponent {
   }
 
   openPopup() {
-    let dialogRef = this.dialog.open(IdentifierGenerateFormComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        let { factoryName, categoryName } = result;
-        if (factoryName && categoryName) {
-          //reload list
-        }
-      }
-    });
+    this.dialog.open(IdentifierGenerateFormComponent);
   }
 }

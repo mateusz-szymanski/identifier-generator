@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { IdentifierDataService } from '../identifier-data-service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MessenagerService } from '../messenager.service';
 
 @Component({
   selector: 'app-identifier-generate-form',
@@ -9,7 +10,6 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./identifier-generate-form.component.scss']
 })
 export class IdentifierGenerateFormComponent {
-
   identifierForm = this.formBuilder.group({
     factoryName: ['', { validators: [Validators.required, Validators.maxLength(30)] }],
     categoryName: ['', { validators: [Validators.required, Validators.maxLength(30)] }]
@@ -26,19 +26,21 @@ export class IdentifierGenerateFormComponent {
   constructor(
     private dialogRef: MatDialogRef<IdentifierGenerateFormComponent>,
     private formBuilder: FormBuilder,
-    private identifierDataService: IdentifierDataService) { }
+    private identifierDataService: IdentifierDataService,
+    private messenagerService: MessenagerService) { }
 
   generateIdentifier() {
-    let factoryName = this.identifierForm.value.factoryName;
-    let categoryName = this.identifierForm.value.categoryName;
+    let { factoryName, categoryName } = this.identifierForm.value;
 
     this.isLoading = true;
     this.identifierDataService.generateNewIdentifier(factoryName, categoryName)
       .subscribe(() => {
         this.identifierForm.reset();
         this.identifierFormRef.resetForm();
-        this.dialogRef.close({ factoryName: factoryName, categoryName: categoryName });
+        this.dialogRef.close();
         this.isLoading = false;
+
+        this.messenagerService.identifierAdded({factoryCode: factoryName, categoryCode: categoryName, value: 1});
       });
   }
 

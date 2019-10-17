@@ -1,31 +1,38 @@
-<table mat-table [dataSource]="dataSource" style="width: 100%;">
-  <ng-container matColumnDef="factoryCode">
-    <th mat-header-cell *matHeaderCellDef>Factory code</th>
-    <td mat-cell *matCellDef="let element">{{element.factoryCode}}</td>
-  </ng-container>
+<div class="router-outlet-container">
+  <div class="loading-overlay" *ngIf="isLoading">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
 
-  <ng-container matColumnDef="categoryCode">
-    <th mat-header-cell *matHeaderCellDef>Category code</th>
-    <td mat-cell *matCellDef="let element">{{element.categoryCode}}</td>
-  </ng-container>
+  <table mat-table [dataSource]="dataSource" style="width: 100%;">
+    <ng-container matColumnDef="factoryCode">
+      <th mat-header-cell *matHeaderCellDef>Factory code</th>
+      <td mat-cell *matCellDef="let element">{{element.factoryCode}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="currentValue">
-    <th mat-header-cell *matHeaderCellDef>Current value</th>
-    <td mat-cell *matCellDef="let element">{{element.value}}</td>
-  </ng-container>
+    <ng-container matColumnDef="categoryCode">
+      <th mat-header-cell *matHeaderCellDef>Category code</th>
+      <td mat-cell *matCellDef="let element">{{element.categoryCode}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let element">
-      <button class="mr-1" mat-raised-button color="accent"
-        [routerLink]="['/', element.factoryCode, element.categoryCode]">History</button>
-      <button mat-raised-button color="accent" (click)="generateNew(element)" [disabled]="element.isLoading">Generate
-        new </button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="currentValue">
+      <th mat-header-cell *matHeaderCellDef>Current value</th>
+      <td mat-cell *matCellDef="let element">{{element.value}}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
-</table>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button class="mr-1" mat-raised-button color="accent"
+          [routerLink]="['/', element.factoryCode, element.categoryCode]">History</button>
+        <button mat-raised-button color="accent" (click)="generateNew(element)" [disabled]="element.isLoading">Generate
+          new </button>
+      </td>
+    </ng-container>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    <tr mat-header-row *matHeaderRowDef="visibleColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: visibleColumns"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+
+</div>
