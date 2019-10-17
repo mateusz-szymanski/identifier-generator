@@ -25,7 +25,8 @@ export class IdentifierListComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     private identifierDataService: IdentifierDataService,
     private messenagerService: MessenagerService,
     private dialog: MatDialog) { }
@@ -44,7 +45,7 @@ export class IdentifierListComponent implements OnInit {
   }
 
   private fillData(data: Identifier[]) {
-    let extendedData = data.map((el) => {
+    const extendedData = data.map((el) => {
       return { isLoading: false, ...el };
     });
 
@@ -63,7 +64,7 @@ export class IdentifierListComponent implements OnInit {
   }
 
   openPopup() {
-    let config: MatDialogConfig = { disableClose: true };
+    const config: MatDialogConfig = { disableClose: true };
     this.dialog.open(IdentifierGenerateFormComponent, config);
   }
 

@@ -12,15 +12,15 @@ import { mergeMap, take } from 'rxjs/operators';
 export class IdentifierHistoryResolverService implements Resolve<IdentifierHistoryEntry[]> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IdentifierHistoryEntry[]> | Observable<never> {
 
-    let factoryCode = route.paramMap.get('factoryCode');
-    let categoryCode = route.paramMap.get('categoryCode');
+    const factoryCode = route.paramMap.get('factoryCode');
+    const categoryCode = route.paramMap.get('categoryCode');
 
     return this.identifierDataService.getIdentifierHistory(factoryCode, categoryCode)
       .pipe(take(1),
         mergeMap(data => {
-          if (data.length > 0)
+          if (data.length > 0) {
             return of(data);
-          else {
+          } else {
             this.router.navigate(['/']);
             return EMPTY;
           }

@@ -1,4 +1,4 @@
 export interface IdentifierHistoryEntry {
-  createdOn: Date,
-  code: string
+  createdOn: Date;
+  code: string;
 }

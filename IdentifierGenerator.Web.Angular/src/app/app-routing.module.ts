@@ -8,22 +8,22 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
-    path: "home", component: HomeComponent
+    path: 'home', component: HomeComponent
   },
   {
-    path: "identifier", component: IdentifierListComponent,
+    path: 'identifier', component: IdentifierListComponent,
     resolve: {
       identifiers: IdentifierListResolverService
     }
   },
   {
-    path: "identifier/:factoryCode/:categoryCode", component: IdentifierHistoryComponent,
+    path: 'identifier/:factoryCode/:categoryCode', component: IdentifierHistoryComponent,
     resolve: {
       identifierHistory: IdentifierHistoryResolverService
     }
   },
   {
-    path: "",
+    path: '',
     redirectTo: '/home',
     pathMatch: 'full'
   }

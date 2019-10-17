@@ -14,14 +14,14 @@ export class IdentifierDataService {
   constructor(private httpClient: HttpClient) { }
 
   private combineUrl(resourceAddress: string): string {
-    let apiUrlTemplate = 'http://localhost:5000/api/{resource}';
-    let url = apiUrlTemplate.replace('{resource}', resourceAddress);
+    const apiUrlTemplate = 'http://localhost:5000/api/{resource}';
+    const url = apiUrlTemplate.replace('{resource}', resourceAddress);
 
     return url;
   }
 
   getIdentifiers(): Observable<Identifier[]> {
-    let url = this.combineUrl('identifier');
+    const url = this.combineUrl('identifier');
 
     return this.httpClient.get<Identifier[]>(url).pipe(
       catchError((error: HttpErrorResponse) => throwError(error))
@@ -29,7 +29,7 @@ export class IdentifierDataService {
   }
 
   getIdentifierHistory(factoryCode: string, categoryCode: string): Observable<IdentifierHistoryEntry[]> {
-    let url = this.combineUrl(`identifier/${factoryCode}/${categoryCode}`);
+    const url = this.combineUrl(`identifier/${factoryCode}/${categoryCode}`);
 
     return this.httpClient.get<IdentifierHistoryEntry[]>(url).pipe(
       catchError((error: HttpErrorResponse) => throwError(error))
@@ -37,7 +37,7 @@ export class IdentifierDataService {
   }
 
   generateNewIdentifier(factoryCode: string, categoryCode: string): Observable<any> {
-    let url = this.combineUrl(`identifier/${factoryCode}/${categoryCode}`);
+    const url = this.combineUrl(`identifier/${factoryCode}/${categoryCode}`);
 
     return this.httpClient.post(url, {}, { responseType: 'text' }).pipe(
       catchError((error: HttpErrorResponse) => throwError(error))

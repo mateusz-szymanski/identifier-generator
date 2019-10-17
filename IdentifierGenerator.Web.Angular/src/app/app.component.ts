@@ -7,7 +7,7 @@ import { Router, RouterEvent, ResolveStart, ResolveEnd } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(router: Router) {
     router.events.subscribe((routerEvent: RouterEvent) => this.checkRouterEvent(routerEvent));

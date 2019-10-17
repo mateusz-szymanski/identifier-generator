@@ -18,7 +18,7 @@ export class IdentifierGenerateFormComponent {
   get factoryName() { return this.identifierForm.get('factoryName'); }
   get categoryName() { return this.identifierForm.get('categoryName'); }
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   @ViewChild('formRef', { static: false })
   private identifierFormRef: NgForm;
@@ -30,7 +30,7 @@ export class IdentifierGenerateFormComponent {
     private messenagerService: MessenagerService) { }
 
   generateIdentifier() {
-    let { factoryName, categoryName } = this.identifierForm.value;
+    const { factoryName, categoryName } = this.identifierForm.value;
 
     this.isLoading = true;
     this.identifierDataService.generateNewIdentifier(factoryName, categoryName)
