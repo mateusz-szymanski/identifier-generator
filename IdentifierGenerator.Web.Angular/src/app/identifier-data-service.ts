@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Identifier } from './identifier';
 import { IdentifierHistoryEntry } from './identifier-history-entry';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class IdentifierDataService {
   constructor(private httpClient: HttpClient) { }
 
   private combineUrl(resourceAddress: string): string {
-    const apiUrlTemplate = 'http://localhost:5000/api/{resource}';
+    const apiUrlTemplate = `${environment.apiUrl}/api/{resource}`;
     const url = apiUrlTemplate.replace('{resource}', resourceAddress);
 
     return url;
