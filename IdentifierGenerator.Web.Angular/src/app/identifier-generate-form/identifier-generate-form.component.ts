@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, Validators, NgForm } from '@angular/forms';
-import { IdentifierDataService } from '../identifier-data-service';
+import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { IdentifierDataService } from '../identifier-data-service';
 import { MessenagerService } from '../messenager.service';
 
 @Component({

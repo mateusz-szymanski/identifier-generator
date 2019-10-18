@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, ResolveStart, ResolveEnd } from '@angular/router';
+import { ResolveEnd, ResolveStart, Router, RouterEvent } from '@angular/router';
 
 @Component({
   selector: 'app-root',

@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-
 import { Identifier } from './identifier';
 import { IdentifierHistoryEntry } from './identifier-history-entry';
-import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
