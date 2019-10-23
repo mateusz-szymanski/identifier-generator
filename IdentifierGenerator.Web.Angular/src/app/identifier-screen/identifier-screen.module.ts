@@ -18,12 +18,14 @@ import { IdentifierGenerateFormComponent } from './identifier-generate-form/iden
 import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
 import { IdentifierScreenRoutingModule } from './identifier-screen-routing.module';
+import { IdentifierScreenComponent } from './identifier-screen/identifier-screen.component';
 
 @NgModule({
   declarations: [
     IdentifierGenerateFormComponent,
     IdentifierListComponent,
-    IdentifierHistoryComponent
+    IdentifierHistoryComponent,
+    IdentifierScreenComponent
   ],
   imports: [
     IdentifierScreenRoutingModule,

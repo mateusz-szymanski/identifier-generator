@@ -4,19 +4,26 @@ import { IdentifierHistoryResolverService } from './identifier-history-resolver.
 import { IdentifierListResolverService } from './identifier-list-resolver.service';
 import { IdentifierHistoryComponent } from './identifier-history/identifier-history.component';
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
+import { IdentifierScreenComponent } from './identifier-screen/identifier-screen.component';
 
 const routes: Routes = [
   {
-    path: 'identifier', component: IdentifierListComponent,
-    resolve: {
-      identifiers: IdentifierListResolverService
-    }
-  },
-  {
-    path: 'identifier/:factoryCode/:categoryCode', component: IdentifierHistoryComponent,
-    resolve: {
-      identifierHistory: IdentifierHistoryResolverService
-    }
+    path: 'identifier',
+    component: IdentifierScreenComponent,
+    children: [
+      {
+        path: '', component: IdentifierListComponent,
+        resolve: {
+          identifiers: IdentifierListResolverService
+        }
+      },
+      {
+        path: ':factoryCode/:categoryCode', component: IdentifierHistoryComponent,
+        resolve: {
+          identifierHistory: IdentifierHistoryResolverService
+        }
+      }
+    ]
   }
 ];
 
