@@ -3,10 +3,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Identifier } from '../identifier';
-import { IdentifierDataService } from '../identifier-data-service';
+import { Identifier } from '../../model/identifier';
+import { IdentifierDataService } from '../../model/identifier-data-service';
 import { IdentifierGenerateFormComponent } from '../identifier-generate-form/identifier-generate-form.component';
-import { MessenagerService } from '../messenager.service';
+import { MessenagerService } from '../../messenager.service';
 
 interface IdentifierEntry extends Identifier {
   isLoading: boolean;

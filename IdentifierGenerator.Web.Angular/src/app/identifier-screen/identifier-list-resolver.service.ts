@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Identifier } from './identifier';
+import { Identifier } from '../model/identifier';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { IdentifierDataService } from './identifier-data-service';
+import { IdentifierDataService } from '../model/identifier-data-service';
 import { take, mergeMap } from 'rxjs/operators';
 
 @Injectable({

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
 import { EMPTY, Observable, of } from 'rxjs';
 import { mergeMap, take } from 'rxjs/operators';
-import { IdentifierDataService } from './identifier-data-service';
-import { IdentifierHistoryEntry } from './identifier-history-entry';
+import { IdentifierDataService } from '../model/identifier-data-service';
+import { IdentifierHistoryEntry } from '../model/identifier-history-entry';
 
 @Injectable({
   providedIn: 'root'

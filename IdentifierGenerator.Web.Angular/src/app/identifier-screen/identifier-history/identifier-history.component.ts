@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { IdentifierHistoryEntry } from '../identifier-history-entry';
+import { IdentifierHistoryEntry } from '../../model/identifier-history-entry';
 
 @Component({
   selector: 'app-identifier-history',
