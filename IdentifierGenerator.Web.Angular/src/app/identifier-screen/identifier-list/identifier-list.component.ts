@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Identifier } from '../../model/identifier';
 import { IdentifierDataService } from '../../model/identifier-data-service';
 import { IdentifierGenerateFormComponent } from '../identifier-generate-form/identifier-generate-form.component';
-import { MessenagerService } from '../../messenager.service';
+import { MessenagerService } from '../messenager.service';
 
 interface IdentifierEntry extends Identifier {
   isLoading: boolean;

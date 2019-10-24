@@ -19,8 +19,10 @@ import { IdentifierHistoryComponent } from './identifier-history/identifier-hist
 import { IdentifierListComponent } from './identifier-list/identifier-list.component';
 import { IdentifierScreenRoutingModule } from './identifier-screen-routing.module';
 import { IdentifierScreenComponent } from './identifier-screen/identifier-screen.component';
+import { MessenagerService } from './messenager.service';
 
 @NgModule({
+  providers: [MessenagerService],
   declarations: [
     IdentifierGenerateFormComponent,
     IdentifierListComponent,

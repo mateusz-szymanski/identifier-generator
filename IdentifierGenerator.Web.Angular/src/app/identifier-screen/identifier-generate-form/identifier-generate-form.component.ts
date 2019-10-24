@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { IdentifierDataService } from '../../model/identifier-data-service';
-import { MessenagerService } from '../../messenager.service';
+import { MessenagerService } from '../messenager.service';
 
 @Component({
   selector: 'app-identifier-generate-form',
