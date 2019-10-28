@@ -10,6 +10,16 @@
       "request": "launch",
       "url": "http://localhost:4200/#",
       "webRoot": "${workspaceFolder}"
-    }
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Attach Karma Chrome",
+      "address": "localhost",
+      "port": 9333,
+      "pathMapping": {
+          "/_karma_webpack_/": "${workspaceFolder}/"
+      }
+  }
   ]
 }

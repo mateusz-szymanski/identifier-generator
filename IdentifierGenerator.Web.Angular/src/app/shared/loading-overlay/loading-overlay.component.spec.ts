@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { By } from '@angular/platform-browser';
 import { LoadingOverlayComponent } from './loading-overlay.component';
 
 describe('LoadingOverlayComponent', () => {
@@ -8,9 +9,12 @@ describe('LoadingOverlayComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingOverlayComponent ]
+      imports: [
+        MatProgressSpinnerModule
+      ],
+      declarations: [LoadingOverlayComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +25,21 @@ describe('LoadingOverlayComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should show/hide spinner based on isLoading', () => {
+    const bySelector = By.css('mat-spinner');
+
+    component.isLoading = false;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(bySelector)).toBeNull();
+
+    component.isLoading = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(bySelector)).not.toBeNull();
+
+    component.isLoading = false;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(bySelector)).toBeNull();
   });
 });
