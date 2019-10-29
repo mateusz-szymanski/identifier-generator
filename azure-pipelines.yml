@@ -29,5 +29,5 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: 'IdentifierGenerator.WebApi'
+    projects: '**/IdentifierGenerator.WebApi/*.csproj'
     arguments: '--output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration)'
