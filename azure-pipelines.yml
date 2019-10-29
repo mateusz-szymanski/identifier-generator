@@ -16,16 +16,19 @@ steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
+  displayName: 'nuget restore'
   inputs:
     restoreSolution: '$(solution)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
   inputs:
     command: 'test'
     projects: '**/*UnitTests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'dotnet publish webapi'
   inputs:
     command: 'publish'
     publishWebProjects: false
@@ -33,29 +36,34 @@ steps:
     arguments: '--output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration)'
 
 - task: PublishBuildArtifacts@1
+  displayName: 'publish artefact webapi'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
 - task: Npm@1
+  displayName: 'npm install'
   inputs:
     workingDir: 'IdentifierGenerator.Web.Angular'
     command: 'install'
 
 - task: Npm@1
+  displayName: 'npm test'
   inputs:
     command: 'custom'
     workingDir: './IdentifierGenerator.Web.Angular'
     customCommand: 'run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI'
 
-- task: Npm@1
-  inputs:
-    command: 'custom'
-    workingDir: './IdentifierGenerator.Web.Angular'
-    customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --prod'
+# - task: Npm@1
+#   displayName: npm e2e
+#   inputs:
+#     command: 'custom'
+#     workingDir: './IdentifierGenerator.Web.Angular'
+#     customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --prod'
 
 - task: Npm@1
+  displayName: 'npm build'
   inputs:
     command: 'custom'
     workingDir: './IdentifierGenerator.Web.Angular'
