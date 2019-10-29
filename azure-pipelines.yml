@@ -53,7 +53,7 @@ steps:
   inputs:
     command: 'custom'
     workingDir: 'IdentifierGenerator.Web.Angular'
-    customCommand: 'build --prod'
+    customCommand: 'run-script build --prod'
     
 - task: CmdLine@2
   inputs:
