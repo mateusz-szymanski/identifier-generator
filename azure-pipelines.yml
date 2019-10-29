@@ -53,7 +53,14 @@ steps:
   inputs:
     command: 'custom'
     workingDir: './IdentifierGenerator.Web.Angular'
-    customCommand: 'run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI'
+    customCommand: 'run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI --reporters=junit'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: |
+      **/TEST-*.xml
+      **/TESTS-*.xml
 
 # - task: Npm@1
 #   displayName: npm e2e
