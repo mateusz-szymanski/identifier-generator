@@ -83,7 +83,3 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/ng-dist'
     ArtifactName: 'ng-dist'
     publishLocation: 'Container'
-
-- task: CmdLine@2
-  inputs:
-    script: 'du -sh $(Build.ArtifactStagingDirectory)/*'
