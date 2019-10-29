@@ -23,5 +23,8 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'IdentifierGenerator.WebApi'
+    projects: |
+      IdentifierGenerator.WebApi
+      IdentifierGenerator.Application.UnitTests
+      IdentifierGenerator.Domain.UnitTests
 
