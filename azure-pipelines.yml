@@ -48,3 +48,13 @@ steps:
     command: 'custom'
     workingDir: 'IdentifierGenerator.Web.Angular'
     customCommand: 'test'
+    
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'IdentifierGenerator.Web.Angular'
+    customCommand: 'build --prod'
+    
+- task: CmdLine@2
+  inputs:
+    script: 'ls IdentifierGenerator.Web.Angular/*'
