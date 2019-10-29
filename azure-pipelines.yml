@@ -78,4 +78,4 @@ steps:
     
 - task: CmdLine@2
   inputs:
-    script: 'ls -l ./IdentifierGenerator.Web.Angular/*'
+    script: 'ls -l ./IdentifierGenerator.Web.Angular/dist/*'
