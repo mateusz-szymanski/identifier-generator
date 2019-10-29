@@ -37,6 +37,12 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+- task: CmdLine@2
+  inputs:
+    script: |
+      echo Debug
+      pwd
+      echo Hello world
 
 - task: Npm@1
   inputs:
