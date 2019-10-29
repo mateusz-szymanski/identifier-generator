@@ -27,6 +27,6 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
-    publishWebProjects: true
+    publishWebProjects: false
     projects: 'IdentifierGenerator.WebApi'
 
