@@ -33,13 +33,13 @@ steps:
     command: 'publish'
     publishWebProjects: false
     projects: '**/IdentifierGenerator.WebApi/*.csproj'
-    arguments: '--output $(Build.ArtifactStagingDirectory) --configuration $(buildConfiguration)'
+    arguments: '--output $(Build.ArtifactStagingDirectory)/webapi --configuration $(buildConfiguration)'
 
 - task: PublishBuildArtifacts@1
   displayName: 'publish artefact webapi'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapi'
+    ArtifactName: 'webapi'
     publishLocation: 'Container'
 
 - task: Npm@1
@@ -74,8 +74,15 @@ steps:
   inputs:
     command: 'custom'
     workingDir: './IdentifierGenerator.Web.Angular'
-    customCommand: 'run build -- --prod'
-    
+    customCommand: 'run build -- --prod --outputPath=$(Build.ArtifactStagingDirectory)/ng-dist'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artefact ng-dist'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ng-dist'
+    ArtifactName: 'ng-dist'
+    publishLocation: 'Container'
+
 - task: CmdLine@2
   inputs:
     script: 'ls -l ./IdentifierGenerator.Web.Angular/dist/*'
