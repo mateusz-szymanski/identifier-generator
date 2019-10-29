@@ -34,6 +34,7 @@ steps:
     publishWebProjects: false
     projects: '**/IdentifierGenerator.WebApi/*.csproj'
     arguments: '--output $(Build.ArtifactStagingDirectory)/webapi --configuration $(buildConfiguration)'
+    zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1
   displayName: 'publish artefact webapi'
