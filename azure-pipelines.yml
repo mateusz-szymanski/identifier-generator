@@ -40,6 +40,7 @@ steps:
 
 - task: Npm@1
   inputs:
+    workingDir: 'IdentifierGenerator.Web.Angular'
     command: 'install'
 
 - task: Npm@1
