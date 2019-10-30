@@ -1,0 +1,85 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+
+pool:
+  vmImage: 'ubuntu-18.04'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: NuGetToolInstaller@1
+
+- task: NuGetCommand@2
+  displayName: 'nuget restore'
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    projects: '**/*UnitTests/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet publish webapi'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/IdentifierGenerator.WebApi/*.csproj'
+    arguments: '--output $(Build.ArtifactStagingDirectory)/webapi --configuration $(buildConfiguration)'
+    zipAfterPublish: false
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artefact webapi'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapi'
+    ArtifactName: 'webapi'
+    publishLocation: 'Container'
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    workingDir: 'IdentifierGenerator.Web.Angular'
+    command: 'install'
+
+- task: Npm@1
+  displayName: 'npm test'
+  inputs:
+    command: 'custom'
+    workingDir: './IdentifierGenerator.Web.Angular'
+    customCommand: 'run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI --reporters=junit'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: |
+      **/TEST-*.xml
+      **/TESTS-*.xml
+
+# - task: Npm@1
+#   displayName: npm e2e
+#   inputs:
+#     command: 'custom'
+#     workingDir: './IdentifierGenerator.Web.Angular'
+#     customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --prod'
+
+- task: Npm@1
+  displayName: 'npm build'
+  inputs:
+    command: 'custom'
+    workingDir: './IdentifierGenerator.Web.Angular'
+    customCommand: 'run build -- --prod --outputPath=$(Build.ArtifactStagingDirectory)/ng-dist'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish artefact ng-dist'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/ng-dist'
+    ArtifactName: 'ng-dist'
+    publishLocation: 'Container'
