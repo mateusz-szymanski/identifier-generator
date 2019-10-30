@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  identifiergenerator.webapi:
+  webapi:
     image: identifier-generator/webapi
     depends_on:
       - sqldb
@@ -10,10 +10,10 @@ services:
       dockerfile: IdentifierGenerator.WebApi/Dockerfile
     ports:
       - 8080:80
-  identifiergenerator.nginx-ng:
+  nginx-ng:
     image: identifier-generator/nginx-ng
     depends_on:
-      - identifiergenerator.webapi
+      - webapi
     build:
       context: .
       dockerfile: IdentifierGenerator.Web.Angular/Dockerfile
