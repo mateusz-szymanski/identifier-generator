@@ -1,18 +1,30 @@
-version: '3.4'
+version: '3.7'
 
 services:
   identifiergenerator.webapi:
-    image: ${DOCKER_REGISTRY-}identifiergeneratorwebapi
+    image: identifier-generator/webapi
     depends_on:
       - sqldb
     build:
       context: .
       dockerfile: IdentifierGenerator.WebApi/Dockerfile
+    ports:
+      - 8080:80
+  identifiergenerator.nginx-ng:
+    image: identifier-generator/nginx-ng
+    depends_on:
+      - identifiergenerator.webapi
+    build:
+      context: .
+      dockerfile: IdentifierGenerator.Web.Angular/Dockerfile
+    ports:
+      - 8081:80
   sqldb:
     image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
         ACCEPT_EULA: "Y"
         SA_PASSWORD: "kask7HsAzaXzG"
+        MSSQL_PID: "Express"
     volumes:
       - sqlvolume:/var/opt/mssql
 #    ports:

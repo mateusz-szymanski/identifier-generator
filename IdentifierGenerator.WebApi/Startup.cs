@@ -46,7 +46,7 @@ namespace IdentifierGenerator.WebApi
                 context.Database.Migrate();
             }
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
             {
                 app.UseDeveloperExceptionPage();
             }

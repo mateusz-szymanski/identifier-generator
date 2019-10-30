@@ -1,9 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
-
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build
 WORKDIR /src
 COPY ["IdentifierGenerator.WebApi/IdentifierGenerator.WebApi.csproj", "IdentifierGenerator.WebApi/"]
 COPY ["IdentifierGenerator.Bootstrap/IdentifierGenerator.Bootstrap.csproj", "IdentifierGenerator.Bootstrap/"]
@@ -13,12 +8,11 @@ COPY ["IdentifierGenerator.Application/IdentifierGenerator.Application.csproj", 
 RUN dotnet restore "IdentifierGenerator.WebApi/IdentifierGenerator.WebApi.csproj"
 COPY . .
 WORKDIR "/src/IdentifierGenerator.WebApi"
-RUN dotnet build "IdentifierGenerator.WebApi.csproj" -c Release -o /app
-
-FROM build AS publish
 RUN dotnet publish "IdentifierGenerator.WebApi.csproj" -c Release -o /app
 
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0 AS base
+EXPOSE 80
+EXPOSE 443
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=build /app /app
 ENTRYPOINT ["dotnet", "IdentifierGenerator.WebApi.dll"]
