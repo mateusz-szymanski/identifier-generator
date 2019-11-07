@@ -1,5 +1,6 @@
 #/bin/bash
 set -x
+set -e
 
 zoneName="example-zone"
 zoneDns="example-zone.com"
@@ -56,3 +57,14 @@ gcloud dns --project=identifier-generator record-sets transaction execute --zone
 kubectl create namespace identifier-generator
 
 kubectl apply -f identifier-generator.secrets.yaml -f sqldb.statefulset.yaml -f sqldb.service.yaml -f sqldb.create-user.job.yaml -f webapi.ef-migrate-database.job.yaml -f webapi.deployment.yaml -f webapi.loadbalancer.yaml -f nginx-ng.configmap.yaml -f nginx-ng.deployment.yaml -f nginx-ng.loadbalancer.yaml -f identifier-generator.ingress.yaml
+
+dnsDomains=$(gcloud dns record-sets list --zone example-zone --filter="type=ns" --format="value(DATA)")
+
+set +x
+
+echo
+
+echo =========
+echo "You can resolve application address $appName using one of the nameservers: "
+echo ${dnsDomains}
+echo =========
