@@ -23,17 +23,17 @@ spec:
         - name: USERNAME
           valueFrom:
             secretKeyRef:
-              name: sqldb-secret-default-connection
+              name: sqldb-secret-webapi-connection
               key: username
         - name: USERPASSWORD
           valueFrom:
             secretKeyRef:
-              name: sqldb-secret-default-connection
+              name: sqldb-secret-webapi-connection
               key: password
         - name: DATABASENAME
           valueFrom:
             secretKeyRef:
-              name: sqldb-secret-default-connection
+              name: sqldb-secret-webapi-connection
               key: databasename
       containers:
       - name: webapi
