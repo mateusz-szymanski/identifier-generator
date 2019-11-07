@@ -1,0 +1,27 @@
+# identifier-generator.example-zone.com and api.identifier-generator.example-zone.com 
+# are registered in dns service, dns server ns-cloud-a1.googledomains.com added to local resolv list
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: identifier-generator
+  namespace: identifier-generator
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.global-static-ip-name: "web-static-ip"
+spec:
+  rules:
+  - host: api.identifier-generator.example-zone.com
+    http:
+      paths:
+      - backend:
+          serviceName: webapi-loadbalancer
+          servicePort: 80
+        path: /*
+  - host: identifier-generator.example-zone.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx-ng-loadbalancer
+          servicePort: 80
+        path: /*

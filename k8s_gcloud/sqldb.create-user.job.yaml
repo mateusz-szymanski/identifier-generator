@@ -1,0 +1,40 @@
+﻿apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sqldb-create-user
+  namespace: identifier-generator
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: init-sqldb
+        image: busybox:1.28
+        command: ['sh', '-c', 'until nslookup sqldb; do echo waiting for sqldb...; sleep 2; done;']
+      containers:
+      - name: sqldb-create-user
+        image: eu.gcr.io/identifier-generator/tools-create-db-user
+        env:
+        - name: SERVER
+          value: sqldb
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-default-connection
+              key: username
+        - name: USERPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-default-connection
+              key: password
+        - name: DATABASENAME
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-default-connection
+              key: databasename
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-sa
+              key: password
+        

@@ -38,6 +38,7 @@ namespace IdentifierGenerator.WebApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseHealthChecks("/"); // for gke - not possible to specify proper health check for ingress
             app.UseHealthChecks("/health");
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sqldb
+  namespace: identifier-generator
+spec:
+  selector:
+    matchLabels:
+      app: sqldb
+  replicas: 1
+  serviceName: sqldb
+  template:
+    metadata:
+      labels:
+        app: sqldb
+    spec:
+      containers:
+      - name: sqldb
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        ports:
+        - containerPort: 1433
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-sa
+              key: password
+        - name: MSSQL_PID
+          value: "Express"
+        volumeMounts:
+        - mountPath: /var/opt/mssql
+          name: sqlvolume
+  volumeClaimTemplates:
+  - metadata:
+      name: sqlvolume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Mi

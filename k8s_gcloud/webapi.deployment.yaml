@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapi
+  namespace: identifier-generator
+spec:
+  selector:
+    matchLabels:
+      app: webapi
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: webapi
+    spec:
+      initContainers:
+      - name: wait-for-sqldb-connection
+        image: mcr.microsoft.com/mssql-tools
+        command: ['sh', '-c', 'until /opt/mssql-tools/bin/sqlcmd -U $USERNAME -P $USERPASSWORD -S sqldb -d $DATABASENAME -Q "SELECT 1"; do echo waiting for connection...; sleep 2; done; echo connection estabilished']
+        env:
+        - name: SERVER
+          value: sqldb
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-default-connection
+              key: username
+        - name: USERPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-default-connection
+              key: password
+        - name: DATABASENAME
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-default-connection
+              key: databasename
+      containers:
+      - name: webapi
+        image: eu.gcr.io/identifier-generator/webapi
+        ports:
+        - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        env:
+        - name: Logging__LogLevel__Default
+          value: Debug
+        volumeMounts:
+        - name: secrets
+          mountPath: "/run/secrets/identifier-generator"
+          readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName: webapi-secret
+
