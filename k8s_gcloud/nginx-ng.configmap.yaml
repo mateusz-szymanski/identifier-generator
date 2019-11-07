@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-ng-configmap
+  namespace: identifier-generator
+data:
+  configuration: |-
+    {
+      "apiUrl": "http://api.identifier-generator.example-zone.com"
+    }

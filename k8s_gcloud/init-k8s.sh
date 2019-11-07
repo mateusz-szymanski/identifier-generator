@@ -16,7 +16,7 @@ docker image rm \
 docker build -t eu.gcr.io/identifier-generator/webapi \
     -f ./IdentifierGenerator.WebApi/Dockerfile .
 docker build -t eu.gcr.io/identifier-generator/nginx-ng \
-    -f ./IdentifierGenerator.Web.Angular/Dockerfile.gke .
+    -f ./IdentifierGenerator.Web.Angular/Dockerfile .
 docker build -t eu.gcr.io/identifier-generator/tools-create-db-user \
     -f ./InfraAsCode/create-db-user/Dockerfile ./InfraAsCode/create-db-user
 docker build -t eu.gcr.io/identifier-generator/tools-ef-migrate-database \
@@ -55,4 +55,4 @@ gcloud dns --project=identifier-generator record-sets transaction execute --zone
 
 kubectl create namespace identifier-generator
 
-kubectl apply -f identifier-generator.secrets.yaml -f sqldb.statefulset.yaml -f sqldb.service.yaml -f sqldb.create-user.job.yaml -f webapi.ef-migrate-database.job.yaml -f webapi.deployment.yaml -f webapi.loadbalancer.yaml -f nginx-ng.deployment.yaml -f nginx-ng.loadbalancer.yaml -f identifier-generator.ingress.yaml
+kubectl apply -f identifier-generator.secrets.yaml -f sqldb.statefulset.yaml -f sqldb.service.yaml -f sqldb.create-user.job.yaml -f webapi.ef-migrate-database.job.yaml -f webapi.deployment.yaml -f webapi.loadbalancer.yaml -f nginx-ng.configmap.yaml -f nginx-ng.deployment.yaml -f nginx-ng.loadbalancer.yaml -f identifier-generator.ingress.yaml

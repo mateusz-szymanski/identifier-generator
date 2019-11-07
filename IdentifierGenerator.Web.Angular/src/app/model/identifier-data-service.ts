@@ -4,17 +4,18 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Identifier } from './identifier';
 import { IdentifierHistoryEntry } from './identifier-history-entry';
-import { environment } from '../../environments/environment';
+import { AppConfigurationService } from '../app-configuration.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IdentifierDataService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private appConfigurationService: AppConfigurationService) { }
 
   private combineUrl(resourceAddress: string): string {
-    const apiUrlTemplate = `${environment.apiUrl}/api/{resource}`;
+    const apiUrl = this.appConfigurationService.getConfig().apiUrl;
+    const apiUrlTemplate = `${apiUrl}/api/{resource}`;
     const url = apiUrlTemplate.replace('{resource}', resourceAddress);
 
     return url;
