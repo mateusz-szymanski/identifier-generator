@@ -1,5 +1,6 @@
 ﻿using IdentifierGenerator.Bootstrap;
 using IdentifierGenerator.Infrastructure;
+using IdentifierGenerator.WebApi.HealthChecks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,7 +26,8 @@ namespace IdentifierGenerator.WebApi
             services.AddControllers();
 
             services.AddHealthChecks()
-                .AddDbContextCheck<IdentifierGeneratorDbContext>("dbContext");
+                .AddDbContextCheck<IdentifierGeneratorDbContext>("dbContext")
+                .AddCheck<PendingMigrationsHealthCheck<IdentifierGeneratorDbContext>>("pendingMigrations");
 
             services.AddCors(action =>
             {
@@ -41,13 +43,16 @@ namespace IdentifierGenerator.WebApi
             app.UseHealthChecks("/"); // for gke - not possible to specify proper health check for ingress
             app.UseHealthChecks("/health");
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            if (env.IsDevelopment())
             {
-                var context = serviceScope.ServiceProvider.GetService<IdentifierGeneratorDbContext>();
-                context.Database.Migrate();
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    var context = serviceScope.ServiceProvider.GetService<IdentifierGeneratorDbContext>();
+                    context.Database.Migrate();
+                }
             }
 
-            if (env.IsDevelopment() || env.IsEnvironment("Docker"))
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }

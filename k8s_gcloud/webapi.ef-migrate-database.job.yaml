@@ -1,18 +1,12 @@
-apiVersion: apps/v1
-kind: Deployment
+﻿apiVersion: batch/v1
+kind: Job
 metadata:
-  name: webapi
+  name: webapi-ef-migrate-database
   namespace: identifier-generator
 spec:
-  selector:
-    matchLabels:
-      app: webapi
-  replicas: 3
   template:
-    metadata:
-      labels:
-        app: webapi
     spec:
+      restartPolicy: Never
       initContainers:
       - name: wait-for-sqldb-connection
         image: mcr.microsoft.com/mssql-tools
@@ -36,10 +30,8 @@ spec:
               name: sqldb-secret-default-connection
               key: databasename
       containers:
-      - name: webapi
-        image: eu.gcr.io/identifier-generator/webapi
-        ports:
-        - containerPort: 80
+      - name: webapi-ef-migrate-database
+        image: eu.gcr.io/identifier-generator/tools-ef-migrate-database
         env:
         - name: ASPNETCORE_ENVIRONMENT
           value: Production
@@ -53,4 +45,4 @@ spec:
       - name: secrets
         secret:
           secretName: webapi-secret
-
+        
