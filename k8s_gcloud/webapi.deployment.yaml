@@ -49,6 +49,12 @@ spec:
         - name: secrets
           mountPath: "/run/secrets/identifier-generator"
           readOnly: true
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
       volumes:
       - name: secrets
         secret:
