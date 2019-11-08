@@ -6,5 +6,5 @@ metadata:
 data:
   configuration: |-
     {
-      "apiUrl": "http://api.identifier-generator.example-zone.com"
+      "apiUrl": "https://api.identifier-generator.example-zone.com"
     }
