@@ -1,3 +1,5 @@
+-- USERNAME='db-user' USERPASSWORD='db-user-pass' DATABASENAME='IdentifierGenerator' SA_PASSWORD="sa-pass" SERVER="server"
+
 IF DB_ID(N'$(DATABASENAME)') IS NOT NULL
 BEGIN;
 	PRINT 'Database $(DATABASENAME) already exists. Exiting...'

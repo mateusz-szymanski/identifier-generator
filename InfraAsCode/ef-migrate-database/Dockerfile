@@ -13,8 +13,4 @@ RUN dotnet build "IdentifierGenerator.WebApi.csproj" -c Debug
 RUN dotnet tool install -g dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
 
-# ENV ConnectionStrings__IdentifierGeneratorContext="Server=sqldb;Database=IdentifierGenerator;User Id=sa;Password=kask7HsAzaXzG"
-
-# ENTRYPOINT [ "cat", "/run/secrets/identifier-generator/webapi" ]
-# ENTRYPOINT [ "ls", "/run/secrets/identifier-generator" ]
 ENTRYPOINT ["dotnet", "ef", "database", "update", "--verbose"]
