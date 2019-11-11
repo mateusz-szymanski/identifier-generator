@@ -59,3 +59,8 @@ stages:
     - task: CmdLine@2
       inputs:
         script: 'cp -r $(Build.SourcesDirectory)/k8s_gcloud/hello-world $(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
