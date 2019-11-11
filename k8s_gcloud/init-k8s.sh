@@ -19,7 +19,7 @@ docker build -t eu.gcr.io/identifier-generator/webapi \
 docker build -t eu.gcr.io/identifier-generator/nginx-ng \
     -f ./IdentifierGenerator.Web.Angular/Dockerfile .
 docker build -t eu.gcr.io/identifier-generator/tools-create-db-user \
-    -f ./InfraAsCode/create-db-user/Dockerfile ./InfraAsCode/create-db-user
+    -f ./InfraAsCode/create-db-user/Dockerfile .
 docker build -t eu.gcr.io/identifier-generator/tools-ef-migrate-database \
     -f ./InfraAsCode/ef-migrate-database/Dockerfile .
 
