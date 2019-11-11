@@ -20,7 +20,7 @@ stages:
       displayName: Build Web.Angular
       inputs:
         containerRegistry: 'GKE registry'
-        repository: 'identifier-generator'
+        repository: 'identifier-generator/nginx-ng'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
