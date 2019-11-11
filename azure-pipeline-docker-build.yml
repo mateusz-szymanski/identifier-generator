@@ -20,6 +20,6 @@ stages:
       displayName: Build Web.Angular
       inputs:
         command: 'build'
-        Dockerfile: '$(Build.SourcesDirectory)/**/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
