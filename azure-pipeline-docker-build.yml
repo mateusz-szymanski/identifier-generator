@@ -52,3 +52,6 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/ef-migrate-database/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
+    - task: CmdLine@2
+      inputs:
+        script: 'cp -r $(Build.SourcesDirectory)/k8s_cloud/hello-world $(Build.ArtifactStagingDirectory)'
