@@ -17,6 +17,7 @@ stages:
       vmImage: 'ubuntu-18.04'
     steps:    
     - task: Docker@2
+      enabled: false
       displayName: Build WebApi
       inputs:
         containerRegistry: 'GKE registry'
@@ -26,6 +27,7 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Docker@2
+      enabled: false
       displayName: Build Web.Angular
       inputs:
         containerRegistry: 'GKE registry'
@@ -35,6 +37,7 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Docker@2
+      enabled: false
       displayName: Build Tools-create-db-user
       inputs:
         containerRegistry: 'GKE registry'
@@ -44,6 +47,7 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Docker@2
+      enabled: false
       displayName: Build Tools-ef-migrate-database
       inputs:
         containerRegistry: 'GKE registry'
@@ -54,4 +58,4 @@ stages:
         tags: '$(tag)'
     - task: CmdLine@2
       inputs:
-        script: 'cp -r $(Build.SourcesDirectory)/k8s_cloud/hello-world $(Build.ArtifactStagingDirectory)'
+        script: 'cp -r $(Build.SourcesDirectory)/k8s_gcloud/hello-world $(Build.ArtifactStagingDirectory)'
