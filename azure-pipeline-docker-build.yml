@@ -19,7 +19,9 @@ stages:
     - task: Docker@2
       displayName: Build Web.Angular
       inputs:
-        command: 'build'
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator'
+        command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
