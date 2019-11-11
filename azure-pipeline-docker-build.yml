@@ -15,8 +15,18 @@ stages:
     displayName: Build
     pool:
       vmImage: 'ubuntu-18.04'
-    steps:
+    steps:    
     - task: Docker@2
+      displayName: Build WebApi
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/webapi'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.WebApi/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Docker@2
+      enabled: false
       displayName: Build Web.Angular
       inputs:
         containerRegistry: 'GKE registry'
