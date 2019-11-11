@@ -26,12 +26,29 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Docker@2
-      enabled: false
       displayName: Build Web.Angular
       inputs:
         containerRegistry: 'GKE registry'
         repository: 'identifier-generator/nginx-ng'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: Build Tools-create-db-user
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/tools-create-db-user'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/create-db-user/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: Build Tools-ef-migrate-database
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/tools-ef-migrate-database'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/ef-migrate-database/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
