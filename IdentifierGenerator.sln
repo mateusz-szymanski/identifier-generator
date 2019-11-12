@@ -11,11 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Applica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Bootstrap", "IdentifierGenerator.Bootstrap\IdentifierGenerator.Bootstrap.csproj", "{5BE9B583-2817-47DA-9C61-DE3E1D266D4E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9A537F4B-75FB-4FBA-8DFE-F587FAED9392}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{9A537F4B-75FB-4FBA-8DFE-F587FAED9392}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.WebApi", "IdentifierGenerator.WebApi\IdentifierGenerator.WebApi.csproj", "{9BB99097-DF58-4D6F-808E-1459EFB7ADBD}"
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{36F480DE-47DA-4C27-BC7E-C4906180C03A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{411EEB26-1C26-4E77-B8D3-0A97F59920FB}"
 	ProjectSection(SolutionItems) = preProject
@@ -30,7 +28,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentifierGenerator.Web.Ang
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IdentifierGenerator.Web.AngularJs", "IdentifierGenerator.Web.AngularJs\IdentifierGenerator.Web.AngularJs.njsproj", "{36472851-D5A0-4D24-9B7F-729CC6884F8F}"
 EndProject
-Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IdentifierGenerator.Web.Angular", "IdentifierGenerator.Web.Angular\IdentifierGenerator.Web.Angular.njsproj", "{F766726A-D684-4FE8-A5F1-164A47286939}"
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "InfraAsCode\docker-compose\docker-compose.dcproj", "{36F480DE-47DA-4C27-BC7E-C4906180C03A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deprecated", "deprecated", "{0F01BCC4-A1E0-4586-A754-9CF5F78DD603}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,10 +58,6 @@ Global
 		{9BB99097-DF58-4D6F-808E-1459EFB7ADBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9BB99097-DF58-4D6F-808E-1459EFB7ADBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9BB99097-DF58-4D6F-808E-1459EFB7ADBD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEC3B7DB-1DB5-409E-8AF4-DBE097F2F370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AEC3B7DB-1DB5-409E-8AF4-DBE097F2F370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEC3B7DB-1DB5-409E-8AF4-DBE097F2F370}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -78,10 +74,10 @@ Global
 		{36472851-D5A0-4D24-9B7F-729CC6884F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36472851-D5A0-4D24-9B7F-729CC6884F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36472851-D5A0-4D24-9B7F-729CC6884F8F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F766726A-D684-4FE8-A5F1-164A47286939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F766726A-D684-4FE8-A5F1-164A47286939}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F766726A-D684-4FE8-A5F1-164A47286939}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F766726A-D684-4FE8-A5F1-164A47286939}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36F480DE-47DA-4C27-BC7E-C4906180C03A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,7 +85,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{AEC3B7DB-1DB5-409E-8AF4-DBE097F2F370} = {9A537F4B-75FB-4FBA-8DFE-F587FAED9392}
 		{0238FF02-895C-4D0B-9344-54FC7753706E} = {9A537F4B-75FB-4FBA-8DFE-F587FAED9392}
-		{322A76C8-E43A-4AB5-9F09-CCEB40B1B238} = {9A537F4B-75FB-4FBA-8DFE-F587FAED9392}
+		{322A76C8-E43A-4AB5-9F09-CCEB40B1B238} = {0F01BCC4-A1E0-4586-A754-9CF5F78DD603}
+		{36472851-D5A0-4D24-9B7F-729CC6884F8F} = {0F01BCC4-A1E0-4586-A754-9CF5F78DD603}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B2BDD156-440E-4764-A492-422812CFFF8F}

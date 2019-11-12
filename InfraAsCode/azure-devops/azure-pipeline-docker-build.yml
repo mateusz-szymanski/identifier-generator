@@ -1,0 +1,91 @@
+trigger:
+- azure-pipelines-docker
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: 'ubuntu-18.04'
+    steps:    
+    - task: Docker@2
+      enabled: true
+      displayName: Build WebApi
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/webapi'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.WebApi/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Docker@2
+      enabled: true
+      displayName: Build Web.Angular
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/nginx-ng'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Docker@2
+      enabled: true
+      displayName: Build Tools-create-db-user
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/tools-create-db-user'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/tools-dockerfiles/create-db-user/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Docker@2
+      enabled: true
+      displayName: Build Tools-ef-migrate-database
+      inputs:
+        containerRegistry: 'GKE registry'
+        repository: 'identifier-generator/tools-ef-migrate-database'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/tools-dockerfiles/ef-migrate-database/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)'
+        tags: '$(tag)'
+    - task: Kubernetes@1
+      displayName: Kubernetes login
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'gke-alpha'
+        command: 'login'
+    - task: CmdLine@2
+      displayName: Install helm
+      inputs:
+        script: |
+          cd $(Agent.BuildDirectory)
+          mkdir -p tools/helmExe; cd tools/helmExe
+          wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
+          $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
+    - task: CmdLine@2
+      displayName: Helm package
+      inputs:
+        script: |
+          $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
+          $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm package -d $(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/InfraAsCode/k8s/identifier-generator
+          echo dockerTag: $(tag) > $(Build.ArtifactStagingDirectory)/values.yaml
+    - task: Kubernetes@1
+      displayName: Kubernetes logout
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'gke-alpha'
+        command: 'logout'
+    - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
