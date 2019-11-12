@@ -7,7 +7,9 @@ zoneDns="example-zone.com"
 appName="identifier-generator.example-zone.com"
 apiName="api.identifier-generator.example-zone.com"
 
-pushd ..
+kubernetesNamespace="identifier-generator"
+
+pushd ../..
 
 set +e
 docker image rm \
@@ -61,10 +63,10 @@ gcloud dns --project=identifier-generator record-sets transaction add $staticIp 
 
 gcloud dns --project=identifier-generator record-sets transaction execute --zone=$zoneName
 
-kubectl create namespace identifier-generator-devops
+kubectl create namespace $kubernetesNamespace
 
 helm install identifier-generator-helm ./identifier-generator \
-    --set namespace=identifier-generator-devops \
+    --set namespace=$kubernetesNamespace \
     --set dockerTag=initial \
     --set webapiHost=$apiName \
     --set webHost=$apiName

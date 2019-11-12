@@ -6,9 +6,11 @@ zoneDns="example-zone.com"
 appName="identifier-generator.example-zone.com."
 apiName="api.identifier-generator.example-zone.com."
 
+kubernetesNamespace="identifier-generator"
+
 helm uninstall identifier-generator-helm
 
-kubectl delete namespace identifier-generator-devops
+kubectl delete namespace $kubernetesNamespace
 
 staticIp=$(gcloud compute addresses list --format="value(address)")
 
