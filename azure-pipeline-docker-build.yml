@@ -66,6 +66,8 @@ stages:
       inputs:
         script: |
           wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
+          pwd
+          ls
           helm ./linux-amd64/helm version
     - task: Kubernetes@1
       inputs:
