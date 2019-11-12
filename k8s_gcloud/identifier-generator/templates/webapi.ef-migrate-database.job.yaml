@@ -4,9 +4,9 @@ metadata:
   name: webapi-ef-migrate-database
   namespace: {{ .Values.namespace }}
 spec:
+  ttlSecondsAfterFinished: 60
   template:
     spec:
-      ttlSecondsAfterFinished: 60
       restartPolicy: Never
       initContainers:
       - name: wait-for-sqldb-connection

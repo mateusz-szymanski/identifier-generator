@@ -4,10 +4,10 @@ metadata:
   name: sqldb-create-user
   namespace: {{ .Values.namespace }}
 spec:
+  ttlSecondsAfterFinished: 60
   template:
     spec:
       restartPolicy: Never
-      ttlSecondsAfterFinished: 60
       initContainers:
       - name: init-sqldb
         image: busybox:1.28
