@@ -56,12 +56,14 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/ef-migrate-database/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
-    - task: HelmInstaller@1
-      inputs:
-        helmVersionToInstall: 'v3.0.0-rc.3'
     - task: CmdLine@2
+      displayName: Install helm
       inputs:
-        script: 'helm version'
+        script: |
+          wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
+          cd linux-amd64
+          PATH=$PATH:$(pwd)
+          helm version
     - task: HelmDeploy@0
       enabled: false
       inputs:
