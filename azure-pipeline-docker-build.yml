@@ -60,7 +60,7 @@ stages:
       displayName: Kubernetes login
       inputs:
         connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'azure-pipelines-cicd-prod'
+        kubernetesServiceEndpoint: 'gke-alpha'
         command: 'login'
     - task: CmdLine@2
       displayName: Install helm
@@ -81,7 +81,7 @@ stages:
       displayName: Kubernetes logout
       inputs:
         connectionType: 'Kubernetes Service Connection'
-        kubernetesServiceEndpoint: 'azure-pipelines-cicd-prod'
+        kubernetesServiceEndpoint: 'gke-alpha'
         command: 'logout'
     - task: PublishBuildArtifacts@1
       displayName: Publish artifacts
