@@ -43,7 +43,7 @@ stages:
         containerRegistry: 'GKE registry'
         repository: 'identifier-generator/tools-create-db-user'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/create-db-user/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/tools-dockerfiles/create-db-user/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Docker@2
@@ -53,7 +53,7 @@ stages:
         containerRegistry: 'GKE registry'
         repository: 'identifier-generator/tools-ef-migrate-database'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/ef-migrate-database/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/tools-dockerfiles/ef-migrate-database/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Kubernetes@1
