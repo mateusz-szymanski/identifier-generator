@@ -82,13 +82,6 @@ stages:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'azure-pipelines-cicd-prod'
         command: 'logout'
-    - task: HelmDeploy@0
-      enabled: false
-      inputs:
-        connectionType: 'None'
-        command: 'package'
-        chartPath: '$(Build.SourcesDirectory)/k8s_gcloud/identifier-generator'
-        save: false
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
