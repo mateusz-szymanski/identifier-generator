@@ -66,14 +66,7 @@ stages:
       inputs:
         script: |
           wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
-          cd linux-amd64
-          PATH=$PATH:$(pwd)
-          helm version
-    - task: CmdLine@2
-      displayName: Install helm
-      inputs:
-        script: |
-          helm version
+          helm ./linux-amd64/version
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
