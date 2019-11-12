@@ -75,8 +75,8 @@ stages:
         script: |
           $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
           $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm package -d $(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/k8s_gcloud/identifier-generator
-          echo dockerTag: $(Build.BuildId)
-          echo dockerTag: $(Build.BuildId) > $(Build.ArtifactStagingDirectory)/values.yaml
+          echo dockerTag: $(tag)
+          echo dockerTag: $(tag) > $(Build.ArtifactStagingDirectory)/values.yaml
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
