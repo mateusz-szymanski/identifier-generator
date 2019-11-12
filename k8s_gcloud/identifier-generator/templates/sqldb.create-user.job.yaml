@@ -7,6 +7,7 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      ttlSecondsAfterFinished: 60
       initContainers:
       - name: init-sqldb
         image: busybox:1.28
