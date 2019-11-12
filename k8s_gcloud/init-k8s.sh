@@ -64,8 +64,7 @@ gcloud dns --project=identifier-generator record-sets transaction execute --zone
 kubectl create namespace identifier-generator
 
 helm install identifier-generator-helm ./identifier-generator \
-    #--namespace identifier-generator \
-    --set namespace=identifier-generator
+    --set namespace=identifier-generator \
     --set dockerTag=initial \
     --set webapiHost=$apiName \
     --set webHost=$apiName
