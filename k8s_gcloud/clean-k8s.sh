@@ -8,7 +8,7 @@ apiName="api.identifier-generator.example-zone.com."
 
 helm uninstall identifier-generator-helm
 
-kubectl delete namespace identifier-generator
+kubectl delete namespace identifier-generator-devops
 
 staticIp=$(gcloud compute addresses list --format="value(address)")
 

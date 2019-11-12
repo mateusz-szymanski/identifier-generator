@@ -61,10 +61,10 @@ gcloud dns --project=identifier-generator record-sets transaction add $staticIp 
 
 gcloud dns --project=identifier-generator record-sets transaction execute --zone=$zoneName
 
-kubectl create namespace identifier-generator
+kubectl create namespace identifier-generator-devops
 
 helm install identifier-generator-helm ./identifier-generator \
-    --set namespace=identifier-generator \
+    --set namespace=identifier-generator-devops \
     --set dockerTag=initial \
     --set webapiHost=$apiName \
     --set webHost=$apiName
