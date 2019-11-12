@@ -65,10 +65,13 @@ stages:
       displayName: Install helm
       inputs:
         script: |
+          cd $(Agent.BuildDirectory)
+          mkdir -p tools/helmExe; cd tools/helmExe
           wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
           pwd
           ls
-          helm ./linux-amd64/helm version
+          ./linux-amd64/helm version
+          $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
     - task: Kubernetes@1
       inputs:
         connectionType: 'Kubernetes Service Connection'
