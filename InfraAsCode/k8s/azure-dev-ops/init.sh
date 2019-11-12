@@ -1,4 +1,4 @@
-# gcloud container clusters get-credentials gcloud-standard-cluster-1
+# gcloud container clusters get-credentials gcloud-standard-cluster
 kubectl create namespace identifier-generator-devops
 kubectl create serviceaccount -n identifier-generator-devops azure-pipelines-deploy
 kubectl create clusterrolebinding azure-pipelines-deploy --clusterrole=cluster-admin --serviceaccount=identifier-generator-devops:azure-pipelines-deploy
