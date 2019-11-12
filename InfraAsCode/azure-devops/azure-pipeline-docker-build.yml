@@ -1,5 +1,5 @@
 trigger:
-- azure-pipelines-docker
+- master
 
 resources:
 - repo: self
