@@ -58,7 +58,7 @@ stages:
         tags: '$(tag)'
     - task: HelmInstaller@1
       inputs:
-        helmVersionToInstall: 'latest'
+        helmVersionToInstall: 'v3.0.0-rc.3'
     - task: CmdLine@2
       inputs:
         script: 'helm version'
