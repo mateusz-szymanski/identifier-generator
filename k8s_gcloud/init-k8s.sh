@@ -4,29 +4,36 @@ set -e
 
 zoneName="example-zone"
 zoneDns="example-zone.com"
-appName="identifier-generator.example-zone.com."
-apiName="api.identifier-generator.example-zone.com."
+appName="identifier-generator.example-zone.com"
+apiName="api.identifier-generator.example-zone.com"
 
 pushd ..
 
+set +e
 docker image rm \
-    eu.gcr.io/identifier-generator/nginx-ng eu.gcr.io/identifier-generator/webapi \
-    eu.gcr.io/identifier-generator/tools-create-db-user \
-    eu.gcr.io/identifier-generator/tools-ef-migrate-database
+    eu.gcr.io/identifier-generator/nginx-ng:initial \
+    eu.gcr.io/identifier-generator/webapi:initial \
+    eu.gcr.io/identifier-generator/tools-create-db-user:initial \
+    eu.gcr.io/identifier-generator/tools-ef-migrate-database:initial
+set -e
 
-docker build -t eu.gcr.io/identifier-generator/webapi \
+docker build \
+    -t eu.gcr.io/identifier-generator/webapi:initial \
     -f ./IdentifierGenerator.WebApi/Dockerfile .
-docker build -t eu.gcr.io/identifier-generator/nginx-ng \
+docker build \
+    -t eu.gcr.io/identifier-generator/nginx-ng:initial \
     -f ./IdentifierGenerator.Web.Angular/Dockerfile .
-docker build -t eu.gcr.io/identifier-generator/tools-create-db-user \
+docker build \
+    -t eu.gcr.io/identifier-generator/tools-create-db-user:initial \
     -f ./InfraAsCode/create-db-user/Dockerfile .
-docker build -t eu.gcr.io/identifier-generator/tools-ef-migrate-database \
+docker build \
+    -t eu.gcr.io/identifier-generator/tools-ef-migrate-database:initial \
     -f ./InfraAsCode/ef-migrate-database/Dockerfile .
 
-docker push eu.gcr.io/identifier-generator/nginx-ng
-docker push eu.gcr.io/identifier-generator/webapi
-docker push eu.gcr.io/identifier-generator/tools-create-db-user
-docker push eu.gcr.io/identifier-generator/tools-ef-migrate-database
+docker push eu.gcr.io/identifier-generator/nginx-ng:initial
+docker push eu.gcr.io/identifier-generator/webapi:initial
+docker push eu.gcr.io/identifier-generator/tools-create-db-user:initial
+docker push eu.gcr.io/identifier-generator/tools-ef-migrate-database:initial
 
 popd
 
@@ -56,7 +63,12 @@ gcloud dns --project=identifier-generator record-sets transaction execute --zone
 
 kubectl create namespace identifier-generator
 
-kubectl apply -f identifier-generator.secrets.yaml -f sqldb.statefulset.yaml -f sqldb.service.yaml -f sqldb.create-user.job.yaml -f webapi.ef-migrate-database.job.yaml -f webapi.deployment.yaml -f webapi.loadbalancer.yaml -f nginx-ng.configmap.yaml -f nginx-ng.deployment.yaml -f nginx-ng.loadbalancer.yaml -f identifier-generator.ingress.yaml
+helm install identifier-generator-helm ./identifier-generator \
+    #--namespace identifier-generator \
+    --set namespace=identifier-generator
+    --set dockerTag=initial \
+    --set webapiHost=$apiName \
+    --set webHost=$apiName
 
 dnsDomains=$(gcloud dns record-sets list --zone example-zone --filter="type=ns" --format="value(DATA)")
 

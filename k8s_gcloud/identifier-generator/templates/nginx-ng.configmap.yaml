@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-ng-configmap
+  namespace: {{ .Values.namespace }}
+data:
+  configuration: |-
+    {
+      "apiUrl": {{ printf "%s%s" .Values.webapiUrlScheme .Values.webapiHost | quote }}
+    }

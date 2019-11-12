@@ -1,0 +1,48 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: webapi-ef-migrate-database
+  namespace: {{ .Values.namespace }}
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+      - name: wait-for-sqldb-connection
+        image: mcr.microsoft.com/mssql-tools
+        command: ['sh', '-c', 'until /opt/mssql-tools/bin/sqlcmd -U $USERNAME -P $USERPASSWORD -S sqldb -d $DATABASENAME -Q "SELECT 1"; do echo waiting for connection...; sleep 2; done; echo connection estabilished']
+        env:
+        - name: SERVER
+          value: sqldb
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-webapi-connection
+              key: username
+        - name: USERPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-webapi-connection
+              key: password
+        - name: DATABASENAME
+          valueFrom:
+            secretKeyRef:
+              name: sqldb-secret-webapi-connection
+              key: databasename
+      containers:
+      - name: webapi-ef-migrate-database
+        image: eu.gcr.io/identifier-generator/tools-ef-migrate-database:{{ .Values.dockerTag }}
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: Logging__LogLevel__Default
+          value: Debug
+        volumeMounts:
+        - name: secrets
+          mountPath: "/run/secrets/identifier-generator"
+          readOnly: true
+      volumes:
+      - name: secrets
+        secret:
+          secretName: webapi-secret
+        

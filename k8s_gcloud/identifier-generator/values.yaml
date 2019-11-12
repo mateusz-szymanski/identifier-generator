@@ -1,0 +1,15 @@
+# Default values for identifier-generator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+dockerTag: "latest"
+webapiUrlScheme: "https://"
+webapiHost: api.identifier-generator.example-zone.com
+webHost: identifier-generator.example-zone.com
+namespace: identifier-generator
+
+sql:
+  databaseName: "IdentifierGenerator"
+  saPassword: "kask7HsAzaXzGJK2HNa82(01"
+  webApiUserName: "identifier-generator-web-api-db-user"
+  webApiUserPassword: "jNht!tgVVamKlP#@mz3@K9"
