@@ -58,7 +58,13 @@ stages:
         tags: '$(tag)'
     - task: CmdLine@2
       inputs:
-        script: 'cp -r $(Build.SourcesDirectory)/k8s_gcloud/hello-world $(Build.ArtifactStagingDirectory)'
+        script: 'cp -r 
+    - task: HelmDeploy@0
+      inputs:
+        connectionType: 'None'
+        command: 'package'
+        chartPath: '$(Build.SourcesDirectory)/k8s_gcloud/identifier-generator'
+        save: false
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
