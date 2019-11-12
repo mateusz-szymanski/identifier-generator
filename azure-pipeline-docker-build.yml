@@ -57,6 +57,7 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Kubernetes@1
+      displayName: Kubernetes login
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'azure-pipelines-cicd-prod'
@@ -70,7 +71,7 @@ stages:
           wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
           $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
     - task: CmdLine@2
-      displayName: Install helm
+      displayName: Helm package
       inputs:
         script: |
           $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
@@ -78,11 +79,13 @@ stages:
           echo dockerTag: $(tag)
           echo dockerTag: $(tag) > $(Build.ArtifactStagingDirectory)/values.yaml
     - task: Kubernetes@1
+      displayName: Kubernetes logout
       inputs:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'azure-pipelines-cicd-prod'
         command: 'logout'
     - task: PublishBuildArtifacts@1
+      displayName: Publish artifacts
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop'
