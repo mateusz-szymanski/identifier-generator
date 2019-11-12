@@ -56,10 +56,14 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/InfraAsCode/ef-migrate-database/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
+    - task: HelmInstaller@1
+      inputs:
+        helmVersionToInstall: 'latest'
     - task: CmdLine@2
       inputs:
-        script: 'cp -r $(Build.SourcesDirectory)/k8s_gcloud/hello-world $(Build.ArtifactStagingDirectory)'
+        script: 'helm version'
     - task: HelmDeploy@0
+      enabled: false
       inputs:
         connectionType: 'None'
         command: 'package'
