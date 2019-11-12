@@ -25,10 +25,10 @@ docker build \
     -f ./IdentifierGenerator.Web.Angular/Dockerfile .
 docker build \
     -t eu.gcr.io/identifier-generator/tools-create-db-user:initial \
-    -f ./InfraAsCode/create-db-user/Dockerfile .
+    -f ./InfraAsCode/tools-dockerfiles/create-db-user/Dockerfile .
 docker build \
     -t eu.gcr.io/identifier-generator/tools-ef-migrate-database:initial \
-    -f ./InfraAsCode/ef-migrate-database/Dockerfile .
+    -f ./InfraAsCode/tools-dockerfiles/ef-migrate-database/Dockerfile .
 
 docker push eu.gcr.io/identifier-generator/nginx-ng:initial
 docker push eu.gcr.io/identifier-generator/webapi:initial
