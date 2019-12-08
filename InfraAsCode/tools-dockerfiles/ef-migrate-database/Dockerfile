@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS base
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
 WORKDIR /src
 COPY ["IdentifierGenerator.WebApi/IdentifierGenerator.WebApi.csproj", "IdentifierGenerator.WebApi/"]
 COPY ["IdentifierGenerator.Bootstrap/IdentifierGenerator.Bootstrap.csproj", "IdentifierGenerator.Bootstrap/"]
