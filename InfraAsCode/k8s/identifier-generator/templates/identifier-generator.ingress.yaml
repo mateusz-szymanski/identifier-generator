@@ -15,7 +15,7 @@ metadata:
   name: identifier-generator
   namespace: {{ .Values.namespace }}
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "web-static-ip"
+    kubernetes.io/ingress.global-static-ip-name: "load-balancer-static-ip"
     kubernetes.io/ingress.allow-http: "false"
 spec:
   tls:
