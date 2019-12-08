@@ -1,5 +1,5 @@
 resource "google_dns_managed_zone" "dns_zone" {
-  name     = var.zone_dns
+  name     = var.zone_dns_name
   dns_name = var.zone_dns
 }
 
