@@ -89,14 +89,21 @@ steps:
       mkdir -p helmTemp
       pushd helmTemp
       wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
+      echo which helm
       which helm
+      echo whereis helm
       whereis helm
       install $(Agent.BuildDirectory)/helmTemp/linux-amd64/helm $(Agent.ToolsDirectory)
-      ls -l $(Agent.ToolsDirectory)
+      pushd $(Agent.ToolsDirectory)
+      echo pwd: $(pwd)
+      popd
       popd
       rm -rf helmTemp
+      echo which helm
       which helm
+      echo whereis helm
       whereis helm
+      echo PATH: $PATH
       helm version
 
 - task: Bash@3
