@@ -11,6 +11,14 @@ pool:
 
 variables:
   applicationUrl: 'http://localhost:4200'
+  applicationInstanceName: 'identifier-generator'
+  zoneName: 'example-zone'
+  zoneDns: 'example-zone.com'
+  appName: "$(applicationInstanceName).$(zoneDns)"
+  apiName: "api.$(appName)"
+  loadBalancerStaticIpName: 'load-balancer-static-ip'
+  imageTag: 'initial'
+  kubernetesNamespace: 'identifier-generator'
 
 steps:
 - task: DownloadBuildArtifacts@0
@@ -42,20 +50,10 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      mv $(System.ArtifactsDirectory)/protractor/* $(Build.SourcesDirectory)/
+      mv $(System.ArtifactsDirectory)/protractor/* \
+      $(Build.SourcesDirectory)/
       ls -l $(System.ArtifactsDirectory)/*
       ls -l $(Build.SourcesDirectory)
-
-- task: Bash@3
-  displayName: 'Install terraform'
-  inputs:
-    targetType: 'inline'
-    script: |
-      wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
-      unzip terraform.zip
-      install terraform $(Agent.ToolsDirectory)
-      rm terraform.zip
-      terraform --version
 
 - task: Npm@1
   displayName: 'Run npm install'
@@ -70,6 +68,61 @@ steps:
     script: |
       node node_modules/protractor/bin/webdriver-manager update
 
+- task: Bash@3
+  displayName: 'Install terraform'
+  inputs:
+    targetType: 'inline'
+    script: |
+      wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
+      unzip terraform.zip
+      install terraform $(Agent.ToolsDirectory)
+      rm terraform.zip
+      terraform --version
+  
+- task: Bash@3
+  enabled: false
+  displayName: 'Run terraform plan'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$terraformCatalog'
+    script: |
+      terraform init
+      terraform plan \
+          -var "credentials_file=$(terraformCatalog)/gcloud-credentials-identifier-generator.json" \
+          -var "application_instance_name=$(applicationInstanceName)" \
+          -var "zone_dns_name=$(zoneName)" \
+          -var "zone_dns=$(zoneDns)." \
+          -var "load_balancer_static_ip_name=$(loadBalancerStaticIpName)" \
+          -out=plan
+      terraform apply plan
+
+- task: Bash@3
+  displayName: 'Install helm tool'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(Agent.BuildDirectory)'
+    script: |
+      mkdir -p helmTemp
+      pushd helmTemp
+      wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
+      install $(Agent.BuildDirectory)/helmTemp/linux-amd64/helm $(Agent.ToolsDirectory)
+      popd
+      rm -rf helmTemp
+      helm version
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run helm install'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
+    script: |
+      helm --kubeconfig $(terraformCatalog)/kube.config install identifier-generator-protractor ./identifier-generator-*.tgz \
+        --set namespace=$(kubernetesNamespace) \
+        --set dockerTag=$(imageTag) \
+        --set webapiHost=$(apiName) \
+        --set webHost=$(appName)
+
 - task: Npm@1
   enabled: false
   displayName: 'Run npm e2e'
@@ -77,6 +130,21 @@ steps:
     command: 'custom'
     workingDir: '$(Build.SourcesDirectory)'
     customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --base-url=$(applicationUrl) --dev-server-target= --reporters=junit'
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run terraform destroy'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(terraformCatalog)'
+    script: |
+      terraform destroy \
+          -var "credentials_file=$(terraformCatalog)/gcloud-credentials-identifier-generator.json" \
+          -var "application_instance_name=$(applicationInstanceName)" \
+          -var "zone_dns_name=$(zoneName)" \
+          -var "zone_dns=$(zoneDns)." \
+          -var "load_balancer_static_ip_name=$(loadBalancerStaticIpName)" \
+          -auto-approve
 
 - task: PublishTestResults@2
   displayName: 'Publish tests'
