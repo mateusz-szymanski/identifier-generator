@@ -93,6 +93,7 @@ steps:
       which helm
       whereis helm
       install $(Agent.BuildDirectory)/helmTemp/linux-amd64/helm $(Agent.ToolsDirectory)
+      ls -l $(Agent.ToolsDirectory)
       popd
       rm -rf helmTemp
       which helm
