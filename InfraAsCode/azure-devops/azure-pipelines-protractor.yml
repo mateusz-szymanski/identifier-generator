@@ -13,7 +13,6 @@ variables:
   applicationUrl: 'http://localhost:4200'
 
 steps:
-
 - task: DownloadBuildArtifacts@0
   displayName: 'Download helmPackage artifact'
   inputs:
