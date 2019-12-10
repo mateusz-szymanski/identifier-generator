@@ -11,6 +11,24 @@ pool:
 
 steps:
 
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'specific'
+    project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
+    pipeline: '3'
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'drop'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: Bash@3
+  displayName: List artifacts'
+  inputs:
+    targetType: 'inline'
+    script: |
+      ls $(System.ArtifactsDirectory)
+  
 - task: Bash@3
   displayName: Install terraform'
   inputs:
