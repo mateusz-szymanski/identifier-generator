@@ -74,12 +74,11 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      terraform --version
       wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
       unzip terraform.zip
       install terraform $(Agent.ToolsDirectory)
       rm terraform.zip
-      terraform --version
+      $(Agent.ToolsDirectory)/terraform --version
   
 - task: Bash@3
   displayName: 'Install helm tool'
