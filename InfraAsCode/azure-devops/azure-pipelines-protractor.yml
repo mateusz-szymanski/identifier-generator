@@ -55,7 +55,7 @@ steps:
       unzip terraform.zip
       install terraform $(Agent.ToolsDirectory)
       rm terraform.zip
-      terraform  --version
+      terraform --version
 
 - task: Npm@1
   displayName: 'Run npm install'
