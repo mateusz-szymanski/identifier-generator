@@ -33,6 +33,19 @@ steps:
     pipeline: '3'
     specificBuildWithTriggering: true
     buildVersionToDownload: 'latest'
+    downloadType: 'specific'
+    itemPattern: 'protractor/**'
+    downloadPath: '$(System.SourcesDirectory)'
+
+- task: DownloadBuildArtifacts@0
+  enabled: false
+  displayName: 'Download protractor artifact'
+  inputs:
+    buildType: 'specific'
+    project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
+    pipeline: '3'
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
     downloadType: 'single'
     artifactName: 'protractor'
     downloadPath: '$(System.ArtifactsDirectory)'
@@ -42,7 +55,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      mv $(System.ArtifactsDirectory)/protractor/* $(Build.SourcesDirectory)/
+      #mv $(System.ArtifactsDirectory)/protractor/* $(Build.SourcesDirectory)/
       ls -l $(System.ArtifactsDirectory)/*
       ls -l $(Build.SourcesDirectory)
 
