@@ -51,7 +51,6 @@ steps:
     workingDir: '$(Build.SourcesDirectory)'
     command: 'install'
 
-
 - task: Bash@3
   displayName: 'update web drivers'
   inputs:
