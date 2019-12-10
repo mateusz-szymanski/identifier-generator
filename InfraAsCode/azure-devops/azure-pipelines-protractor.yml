@@ -12,6 +12,7 @@ pool:
 steps:
 
 - task: DownloadBuildArtifacts@0
+  displayName: 'Download helmPackage artifact'
   inputs:
     buildType: 'specific'
     project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
@@ -19,18 +20,30 @@ steps:
     specificBuildWithTriggering: true
     buildVersionToDownload: 'latest'
     downloadType: 'single'
-    artifactName: 'drop'
+    artifactName: 'helmPackage'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download protractor artifact'
+  inputs:
+    buildType: 'specific'
+    project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
+    pipeline: '3'
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'protractor'
     downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: Bash@3
-  displayName: 'List artifacts'
+  displayName: 'list artifacts'
   inputs:
     targetType: 'inline'
     script: |
-      ls -l $(System.ArtifactsDirectory)/drop
+      ls -l $(System.ArtifactsDirectory)/*
   
 - task: Bash@3
-  displayName: Install terraform'
+  displayName: 'install terraform'
   inputs:
     targetType: 'inline'
     script: |
@@ -40,7 +53,7 @@ steps:
       rm terraform.zip
 
 - task: Bash@3
-  displayName: 'Get terraform version'
+  displayName: 'get terraform version'
   inputs:
     targetType: 'inline'
     script: |
