@@ -1,10 +1,20 @@
 const config = require('./protractor.conf').config;
 
-config.capabilities = {
-  browserName: 'chrome',
-  chromeOptions: {
-    args: ['--headless', '--no-sandbox', '--disable-gpu']
+delete config.capabilities;
+
+config.multiCapabilities = [
+  {
+    browserName: 'chrome',
+    chromeOptions: {
+      args: ['--headless', '--no-sandbox', '--disable-gpu']
+    }
+  },
+  {
+    browserName: 'firefox',
+    'moz:firefoxOptions': {
+      args: ['--headless']
+    },
   }
-};
+]
 
 exports.config = config;

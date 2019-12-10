@@ -54,7 +54,13 @@ describe('generate-identifier', () => {
 
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser
-    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
+    const logs = await browser.manage().logs().get(logging.Type.BROWSER)
+      .catch((reason) => {
+        // Unfortunately, firefox has an issue with awaiting get above
+        console.log("An issue occurred during getting logs from browser:");
+        console.log(reason);
+      });
+
     expect(logs).not.toContain(jasmine.objectContaining({
       level: logging.Level.SEVERE,
     } as logging.Entry));
