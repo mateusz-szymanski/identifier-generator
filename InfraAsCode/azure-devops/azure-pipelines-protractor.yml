@@ -38,7 +38,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: Bash@3
-  displayName: 'Move protractor artifact to solution directory'
+  displayName: 'Move protractor to solution directory'
   inputs:
     targetType: 'inline'
     script: |
