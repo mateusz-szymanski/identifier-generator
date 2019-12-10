@@ -43,7 +43,7 @@ steps:
     targetType: 'inline'
     script: |
       ls -l $(System.ArtifactsDirectory)/*
-      ls -l $(System.SourcesDirectory)/*
+      ls -l $(System.SourcesDirectory)
 
 - task: Npm@1
   displayName: 'npm install'
