@@ -14,7 +14,7 @@ variables:
 
 steps:
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download helmPackage artifact'
+  displayName: 'download helmPackage artifact'
   inputs:
     buildType: 'specific'
     project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
@@ -26,7 +26,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'Download protractor artifact'
+  displayName: 'download protractor artifact'
   inputs:
     buildType: 'specific'
     project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
@@ -37,19 +37,31 @@ steps:
     artifactName: 'protractor'
     downloadPath: '$(Build.ArtifactsDirectory)'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.ArtifactsDirectory)/protractor'
-    Contents: '**'
-    TargetFolder: '$(Build.SourcesDirectory)'
-
 - task: Bash@3
-  displayName: 'list artifacts'
+  displayName: 'move protractor artifact to solution directory'
   inputs:
     targetType: 'inline'
     script: |
+      mv $(System.ArtifactsDirectory)/* $(Build.SourcesDirectory)/
       ls -l $(System.ArtifactsDirectory)/*
       ls -l $(Build.SourcesDirectory)
+
+- task: Bash@3
+  displayName: 'install terraform'
+  inputs:
+    targetType: 'inline'
+    script: |
+      wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
+      unzip terraform.zip
+      install terraform $(Agent.ToolsDirectory)
+      rm terraform.zip
+
+- task: Bash@3
+  displayName: 'get terraform version'
+  inputs:
+    targetType: 'inline'
+    script: |
+      terraform  --version
 
 - task: Npm@1
   displayName: 'npm install'
@@ -79,20 +91,3 @@ steps:
     testResultsFiles: |
       **/TEST-*.xml
       **/TESTS-*.xml
-
-- task: Bash@3
-  displayName: 'install terraform'
-  inputs:
-    targetType: 'inline'
-    script: |
-      wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
-      unzip terraform.zip
-      install terraform $(Agent.ToolsDirectory)
-      rm terraform.zip
-
-- task: Bash@3
-  displayName: 'get terraform version'
-  inputs:
-    targetType: 'inline'
-    script: |
-      terraform  --version
