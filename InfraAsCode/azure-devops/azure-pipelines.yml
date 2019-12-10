@@ -17,7 +17,7 @@ variables:
 steps:
 
 - task: UseDotNet@2
-  displayName: 'Install dotnet core 3.1'
+  displayName: 'install dotnet core 3.1'
   inputs:
     packageType: sdk
     version: '3.1.100'
@@ -51,6 +51,13 @@ steps:
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapi'
     ArtifactName: 'webapi'
+    publishLocation: 'Container'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'publish protractor code'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/protractor'
+    ArtifactName: 'protractor'
     publishLocation: 'Container'
 
 - task: Npm@1
