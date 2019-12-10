@@ -1,5 +1,5 @@
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '$(applicationSemanticVersion)-buildNo+$(Build.BuildId)'
 
 stages:
 - stage: Build
