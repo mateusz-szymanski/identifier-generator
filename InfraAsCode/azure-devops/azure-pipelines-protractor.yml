@@ -42,7 +42,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      mv $(System.ArtifactsDirectory)/* $(Build.SourcesDirectory)/
+      mv $(System.ArtifactsDirectory)/protractor/* $(Build.SourcesDirectory)/
       ls -l $(System.ArtifactsDirectory)/*
       ls -l $(Build.SourcesDirectory)
 
