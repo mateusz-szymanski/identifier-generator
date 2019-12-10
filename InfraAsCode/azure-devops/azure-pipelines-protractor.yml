@@ -57,4 +57,4 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      terraform --version
+      terraform  --version
