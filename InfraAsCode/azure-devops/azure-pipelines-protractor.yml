@@ -7,7 +7,10 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-18.04'
+
+variables:
+  applicationUrl: 'http://localhost:4200'
 
 steps:
 
@@ -33,7 +36,7 @@ steps:
     buildVersionToDownload: 'latest'
     downloadType: 'single'
     artifactName: 'protractor'
-    downloadPath: '$(System.ArtifactsDirectory)'
+    downloadPath: '$(Build.SourcesDirectory)'
 
 - task: Bash@3
   displayName: 'list artifacts'
@@ -41,7 +44,38 @@ steps:
     targetType: 'inline'
     script: |
       ls -l $(System.ArtifactsDirectory)/*
-  
+      ls -l $(System.SourcesDirectory)/*
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    workingDir: '$(Build.SourcesDirectory)'
+    command: 'install'
+
+
+- task: Bash@3
+  displayName: 'update web drivers'
+  inputs:
+    targetType: 'inline'
+    script: |
+      node node_modules/protractor/bin/webdriver-manager update
+
+- task: Npm@1
+  enabled: false
+  displayName: 'npm e2e'
+  inputs:
+    command: 'custom'
+    workingDir: '$(Build.SourcesDirectory)'
+    customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --base-url=$(applicationUrl) --dev-server-target= --reporters=junit'
+
+- task: PublishTestResults@2
+  displayName: 'publish tests'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: |
+      **/TEST-*.xml
+      **/TESTS-*.xml
+
 - task: Bash@3
   displayName: 'install terraform'
   inputs:
