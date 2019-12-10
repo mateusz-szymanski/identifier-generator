@@ -35,7 +35,13 @@ steps:
     buildVersionToDownload: 'latest'
     downloadType: 'single'
     artifactName: 'protractor'
-    downloadPath: '$(Build.SourcesDirectory)'
+    downloadPath: '$(Build.ArtifactsDirectory)'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.ArtifactsDirectory)/protractor'
+    Contents: '**'
+    TargetFolder: '$(Build.SourcesDirectory)'
 
 - task: Bash@3
   displayName: 'list artifacts'
