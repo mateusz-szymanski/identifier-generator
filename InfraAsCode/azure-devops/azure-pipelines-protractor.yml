@@ -70,9 +70,10 @@ steps:
       node node_modules/protractor/bin/webdriver-manager update
 
 - task: Bash@3
-  displayName: 'Install terraform'
+  displayName: 'Install terraform tool'
   inputs:
     targetType: 'inline'
+    workingDirectory: '$(Agent.TempDirectory)'
     script: |
       wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
       unzip terraform.zip
@@ -84,7 +85,7 @@ steps:
   displayName: 'Install helm tool'
   inputs:
     targetType: 'inline'
-    workingDirectory: '$(Agent.BuildDirectory)'
+    workingDirectory: '$(Agent.TempDirectory)'
     script: |
       mkdir -p helmTemp
       pushd helmTemp
