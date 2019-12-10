@@ -83,7 +83,7 @@ stages:
       displayName: Publish artifacts
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
+        ArtifactName: 'helmPackage'
         publishLocation: 'Container'
     - task: DownloadBuildArtifacts@0
       inputs:
