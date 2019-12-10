@@ -34,7 +34,7 @@ steps:
   displayName: 'dotnet test'
   inputs:
     command: 'test'
-    projects: '**/*UnitTests/*.csproj'
+    projects: '$(Build.SourcesDirectory)/**/*UnitTests/*.csproj'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
@@ -42,16 +42,22 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    projects: '**/IdentifierGenerator.WebApi/*.csproj'
+    projects: '$(Build.SourcesDirectory)/**/IdentifierGenerator.WebApi/*.csproj'
     arguments: '--output $(Build.ArtifactStagingDirectory)/webapi --configuration $(buildConfiguration)'
     zipAfterPublish: false
 
 - task: PublishBuildArtifacts@1
-  displayName: 'publish artefact webapi'
+  displayName: 'publish artifact webapi'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/webapi'
     ArtifactName: 'webapi'
     publishLocation: 'Container'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/protractor'
 
 - task: PublishBuildArtifacts@1
   displayName: 'publish protractor code'
@@ -63,14 +69,14 @@ steps:
 - task: Npm@1
   displayName: 'npm install'
   inputs:
-    workingDir: 'IdentifierGenerator.Web.Angular'
+    workingDir: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
     command: 'install'
 
 - task: Npm@1
   displayName: 'npm test'
   inputs:
     command: 'custom'
-    workingDir: './IdentifierGenerator.Web.Angular'
+    workingDir: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
     customCommand: 'run test -- --watch=false --progress=false --browsers=ChromeHeadlessCI --reporters=junit'
 
 - task: PublishTestResults@2
@@ -91,11 +97,11 @@ steps:
   displayName: 'npm build'
   inputs:
     command: 'custom'
-    workingDir: './IdentifierGenerator.Web.Angular'
+    workingDir: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
     customCommand: 'run build -- --prod --outputPath=$(Build.ArtifactStagingDirectory)/ng-dist'
 
 - task: PublishBuildArtifacts@1
-  displayName: 'publish artefact ng-dist'
+  displayName: 'publish artifact ng-dist'
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)/ng-dist'
     ArtifactName: 'ng-dist'
