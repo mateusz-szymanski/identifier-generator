@@ -55,12 +55,6 @@ steps:
       unzip terraform.zip
       install terraform $(Agent.ToolsDirectory)
       rm terraform.zip
-
-- task: Bash@3
-  displayName: 'Get terraform version'
-  inputs:
-    targetType: 'inline'
-    script: |
       terraform  --version
 
 - task: Npm@1
