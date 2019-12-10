@@ -14,7 +14,7 @@ variables:
 
 steps:
 - task: DownloadBuildArtifacts@0
-  displayName: 'download helmPackage artifact'
+  displayName: 'Download helmPackage artifact'
   inputs:
     buildType: 'specific'
     project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
@@ -26,7 +26,7 @@ steps:
     downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: DownloadBuildArtifacts@0
-  displayName: 'download protractor artifact'
+  displayName: 'Download protractor artifact'
   inputs:
     buildType: 'specific'
     project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
@@ -38,7 +38,7 @@ steps:
     downloadPath: '$(Build.ArtifactsDirectory)'
 
 - task: Bash@3
-  displayName: 'move protractor artifact to solution directory'
+  displayName: 'Move protractor artifact to solution directory'
   inputs:
     targetType: 'inline'
     script: |
@@ -47,7 +47,7 @@ steps:
       ls -l $(Build.SourcesDirectory)
 
 - task: Bash@3
-  displayName: 'install terraform'
+  displayName: 'Install terraform'
   inputs:
     targetType: 'inline'
     script: |
@@ -57,20 +57,20 @@ steps:
       rm terraform.zip
 
 - task: Bash@3
-  displayName: 'get terraform version'
+  displayName: 'Get terraform version'
   inputs:
     targetType: 'inline'
     script: |
       terraform  --version
 
 - task: Npm@1
-  displayName: 'npm install'
+  displayName: 'Run npm install'
   inputs:
     workingDir: '$(Build.SourcesDirectory)'
     command: 'install'
 
 - task: Bash@3
-  displayName: 'update web drivers'
+  displayName: 'Update web drivers'
   inputs:
     targetType: 'inline'
     script: |
@@ -78,14 +78,14 @@ steps:
 
 - task: Npm@1
   enabled: false
-  displayName: 'npm e2e'
+  displayName: 'Run npm e2e'
   inputs:
     command: 'custom'
     workingDir: '$(Build.SourcesDirectory)'
     customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --base-url=$(applicationUrl) --dev-server-target= --reporters=junit'
 
 - task: PublishTestResults@2
-  displayName: 'publish tests'
+  displayName: 'Publish tests'
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: |
