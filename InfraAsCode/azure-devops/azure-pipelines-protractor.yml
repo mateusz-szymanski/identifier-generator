@@ -78,7 +78,7 @@ steps:
       wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
       unzip terraform.zip
       install terraform $(Agent.ToolsDirectory)
-      rm terraform.zip
+      rm terraform terraform.zip
       $(Agent.ToolsDirectory)/terraform --version
   
 - task: Bash@3
@@ -90,7 +90,9 @@ steps:
       mkdir -p helmTemp
       pushd helmTemp
       wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
-      install $(Agent.BuildDirectory)/helmTemp/linux-amd64/helm $(Agent.ToolsDirectory)
+      install ./linux-amd64/helm $(Agent.ToolsDirectory)
+      popd
+      rm -rf helmTemp
       $(Agent.ToolsDirectory)/helm version
 
 - task: Bash@3
