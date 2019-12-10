@@ -56,12 +56,14 @@ steps:
       ls -l $(Build.SourcesDirectory)
 
 - task: Npm@1
+  enabled: false
   displayName: 'Run npm install'
   inputs:
     workingDir: '$(Build.SourcesDirectory)'
     command: 'install'
 
 - task: Bash@3
+  enabled: false
   displayName: 'Update web drivers'
   inputs:
     targetType: 'inline'
@@ -80,6 +82,37 @@ steps:
       terraform --version
   
 - task: Bash@3
+  displayName: 'Install helm tool'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(Agent.BuildDirectory)'
+    script: |
+      mkdir -p helmTemp
+      pushd helmTemp
+      wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
+      which helm
+      whereis helm
+      install $(Agent.BuildDirectory)/helmTemp/linux-amd64/helm $(Agent.ToolsDirectory)
+      popd
+      rm -rf helmTemp
+      which helm
+      whereis helm
+      helm version
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run helm install'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
+    script: |
+      helm --kubeconfig $(terraformCatalog)/kube.config install identifier-generator-protractor ./identifier-generator-*.tgz \
+        --set namespace=$(kubernetesNamespace) \
+        --set dockerTag=$(imageTag) \
+        --set webapiHost=$(apiName) \
+        --set webHost=$(appName)
+
+- task: Bash@3
   enabled: false
   displayName: 'Run terraform plan'
   inputs:
@@ -95,33 +128,6 @@ steps:
           -var "load_balancer_static_ip_name=$(loadBalancerStaticIpName)" \
           -out=plan
       terraform apply plan
-
-- task: Bash@3
-  displayName: 'Install helm tool'
-  inputs:
-    targetType: 'inline'
-    workingDirectory: '$(Agent.BuildDirectory)'
-    script: |
-      mkdir -p helmTemp
-      pushd helmTemp
-      wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
-      install $(Agent.BuildDirectory)/helmTemp/linux-amd64/helm $(Agent.ToolsDirectory)
-      popd
-      rm -rf helmTemp
-      helm version
-
-- task: Bash@3
-  enabled: false
-  displayName: 'Run helm install'
-  inputs:
-    targetType: 'inline'
-    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
-    script: |
-      helm --kubeconfig $(terraformCatalog)/kube.config install identifier-generator-protractor ./identifier-generator-*.tgz \
-        --set namespace=$(kubernetesNamespace) \
-        --set dockerTag=$(imageTag) \
-        --set webapiHost=$(apiName) \
-        --set webHost=$(appName)
 
 - task: Npm@1
   enabled: false
