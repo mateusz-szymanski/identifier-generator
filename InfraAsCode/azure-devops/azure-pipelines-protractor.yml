@@ -10,10 +10,13 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: Bash@3
+  displayName: Install terraform'
+  inputs:
+    targetType: 'inline'
+    script: |
+      wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
+      unzip terraform.zip
+      install terraform $(Agent.ToolsDirectory)
+      rm terraform.zip
