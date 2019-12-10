@@ -35,7 +35,7 @@ steps:
     buildVersionToDownload: 'latest'
     downloadType: 'single'
     artifactName: 'protractor'
-    downloadPath: '$(Build.ArtifactsDirectory)'
+    downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: Bash@3
   displayName: 'Move protractor artifact to solution directory'
