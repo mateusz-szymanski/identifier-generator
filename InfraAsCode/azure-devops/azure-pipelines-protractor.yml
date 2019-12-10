@@ -27,7 +27,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ls $(System.ArtifactsDirectory)
+      ls -l $(System.ArtifactsDirectory)/drop
   
 - task: Bash@3
   displayName: Install terraform'
