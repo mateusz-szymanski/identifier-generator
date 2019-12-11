@@ -95,6 +95,7 @@ steps:
     targetType: 'inline'
     workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
     script: |
+      kubectl --kubeconfig $(terraformCatalog)/kube.config create namespace $(kubernetesNamespace)
       $(Agent.ToolsDirectory)/helm install \
           identifier-generator-protractor ./identifier-generator-*.tgz \
         --kubeconfig $(terraformCatalog)/kube.config \
