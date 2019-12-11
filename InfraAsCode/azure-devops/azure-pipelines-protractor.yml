@@ -141,7 +141,6 @@ steps:
           -var-file=./terraform.override.tfvars \
           -out=plan
       $(Agent.ToolsDirectory)/terraform apply \
-          -state=./state \
           plan
 
 - task: Npm@1
@@ -162,7 +161,6 @@ steps:
     script: |
       $(Agent.ToolsDirectory)/terraform destroy \
           -var-file=./terraform.override.tfvars \
-          -state=./state \
           -auto-approve
 
 - task: PublishTestResults@2
