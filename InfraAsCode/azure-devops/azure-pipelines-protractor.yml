@@ -121,7 +121,8 @@ steps:
     workingDirectory: '$(terraformTemplatesCatalog)'
     script: |
       rm terraform.override.tfvars
-      echo credentials_file             = $(XXX) >> terraform.override.tfvars
+      echo $(cloudCredentials) > cloudCredentials.json
+      echo credentials_file             = cloudCredentials.json >> terraform.override.tfvars
       echo application_instance_name    = $(applicationInstanceName) >> terraform.override.tfvars
       echo zone_dns_name                = $(zoneName) >> terraform.override.tfvars
       echo zone_dns                     = $(zoneDns) >> terraform.override.tfvars
