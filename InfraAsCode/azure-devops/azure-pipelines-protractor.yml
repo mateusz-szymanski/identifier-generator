@@ -46,38 +46,16 @@ steps:
     artifactName: 'helmPackage'
     downloadPath: '$(System.ArtifactsDirectory)'
 
-- task: DownloadBuildArtifacts@0
-  displayName: 'Download protractor artifact'
-  inputs:
-    buildType: 'specific'
-    project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
-    pipeline: '3'
-    specificBuildWithTriggering: true
-    buildVersionToDownload: 'latest'
-    downloadType: 'single'
-    artifactName: 'protractor'
-    downloadPath: '$(System.ArtifactsDirectory)'
-
-- task: Bash@3
-  displayName: 'Move protractor to solution directory'
-  inputs:
-    targetType: 'inline'
-    script: |
-      mv $(System.ArtifactsDirectory)/protractor/* $(Build.SourcesDirectory)/
-      ls -l $(System.ArtifactsDirectory)/*
-      ls -l $(Build.SourcesDirectory)
-
 - task: Npm@1
-  enabled: false
   displayName: 'Run npm install'
   inputs:
-    workingDir: '$(Build.SourcesDirectory)'
+    workingDir: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
     command: 'install'
 
 - task: Bash@3
-  enabled: false
   displayName: 'Update web drivers'
   inputs:
+    workingDirectory: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
     targetType: 'inline'
     script: |
       node node_modules/protractor/bin/webdriver-manager update
@@ -103,7 +81,6 @@ steps:
       mkdir -p helmTemp
       pushd helmTemp
       wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
-      pwd; ls
       install ./linux-amd64/helm $(Agent.ToolsDirectory)
       popd
       rm -rf helmTemp
