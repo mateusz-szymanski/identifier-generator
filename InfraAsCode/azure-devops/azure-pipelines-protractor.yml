@@ -14,7 +14,7 @@ variables:
   zoneName: 'example-zone'
   zoneDns: 'example-zone.com'
   appDns: "$(applicationInstanceName).$(zoneDns)"
-  apiDns: "api.$(appName)"
+  apiDns: "api.$(appDns)"
   loadBalancerStaticIpName: 'load-balancer-static-ip'
   kubernetesNamespace: 'identifier-generator-protractor'
   applicationUrl: 'http://$(appDns)'
@@ -95,7 +95,9 @@ steps:
     targetType: 'inline'
     workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
     script: |
-      $(Agent.ToolsDirectory)/helm --kubeconfig $(terraformCatalog)/kube.config install identifier-generator-protractor ./identifier-generator-*.tgz \
+      $(Agent.ToolsDirectory)/helm install \
+          identifier-generator-protractor ./identifier-generator-*.tgz \
+        --kubeconfig $(terraformCatalog)/kube.config
         --values ./values.yaml \
         --set namespace=$(kubernetesNamespace) \
         --set webapiHost=$(apiDns) \
@@ -106,7 +108,7 @@ steps:
   displayName: 'Run terraform plan'
   inputs:
     targetType: 'inline'
-    workingDirectory: '$terraformCatalog'
+    workingDirectory: '$(terraformCatalog)'
     script: |
       $(Agent.ToolsDirectory)/terraform init
       $(Agent.ToolsDirectory)/terraform plan \
