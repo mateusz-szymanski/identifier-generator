@@ -88,6 +88,16 @@ steps:
       rm -rf helmTemp
       $(Agent.ToolsDirectory)/helm version
 
+-task: Bash@3
+  displayName: 'Prepare helm values.yaml'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
+    script: |
+      echo namespace: $(kubernetesNamespace) >> values.yaml
+      echo webapiHost: $(apiDns) >> values.yaml
+      echo webHost: $(appDns) >> values.yaml
+
 - task: Bash@3
   enabled: false
   displayName: 'Run helm install'
@@ -99,10 +109,7 @@ steps:
       $(Agent.ToolsDirectory)/helm install \
           identifier-generator-protractor ./identifier-generator-*.tgz \
         --kubeconfig $(terraformCatalog)/kube.config \
-        --values ./values.yaml \
-        --set namespace=$(kubernetesNamespace) \
-        --set webapiHost=$(apiDns) \
-        --set webHost=$(appDns)
+        --values ./values.yaml
 
 - task: Bash@3
   enabled: false
