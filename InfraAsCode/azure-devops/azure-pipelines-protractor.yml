@@ -11,12 +11,12 @@ pool:
 
 variables:
   applicationInstanceName: 'identifier-generator'
+  loadBalancerStaticIpName: 'load-balancer-static-ip'
+  kubernetesNamespace: 'identifier-generator-protractor'
   zoneName: 'example-zone'
   zoneDns: 'example-zone.com'
   appDns: "$(applicationInstanceName).$(zoneDns)"
   apiDns: "api.$(appDns)"
-  loadBalancerStaticIpName: 'load-balancer-static-ip'
-  kubernetesNamespace: 'identifier-generator-protractor'
   applicationUrl: 'http://$(appDns)'
   terraformTemplatesCatalog: "$(Build.SourcesDirectory)/InfraAsCode/terraform"
   terraformWorkingCatalog: "$(Agent.TempDirectory)"
