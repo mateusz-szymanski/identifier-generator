@@ -53,19 +53,6 @@ steps:
     ArtifactName: 'webapi'
     publishLocation: 'Container'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)/protractor'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'publish protractor code'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)/protractor'
-    ArtifactName: 'protractor'
-    publishLocation: 'Container'
-
 - task: Npm@1
   displayName: 'npm install'
   inputs:
