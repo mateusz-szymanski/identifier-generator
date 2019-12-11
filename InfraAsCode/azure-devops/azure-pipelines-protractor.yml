@@ -18,6 +18,7 @@ variables:
   loadBalancerStaticIpName: 'load-balancer-static-ip'
   kubernetesNamespace: 'identifier-generator-protractor'
   applicationUrl: 'http://$(appDns)'
+  terraformCatalog: "$(Build.SourcesDirectory)/InfraAsCode/terraform"
 
 steps:
 
@@ -33,6 +34,7 @@ steps:
       echo apiDns: $(apiDns)
       echo loadBalancerStaticIpName: $(loadBalancerStaticIpName)
       echo kubernetesNamespace: $(kubernetesNamespace)
+      echo terraformCatalog: $(terraformCatalog)
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download helmPackage artifact'
