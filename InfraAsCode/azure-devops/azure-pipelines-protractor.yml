@@ -17,10 +17,23 @@ variables:
   appName: "$(applicationInstanceName).$(zoneDns)"
   apiName: "api.$(appName)"
   loadBalancerStaticIpName: 'load-balancer-static-ip'
-  imageTag: 'initial'
-  kubernetesNamespace: 'identifier-generator'
+  kubernetesNamespace: 'identifier-generator-protractor'
 
 steps:
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo applicationUrl: $(applicationUrl)
+      echo applicationInstanceName: $(applicationInstanceName)
+      echo zoneName: $(zoneName)
+      echo zoneDns: $(zoneDns)
+      echo appName: $(appName)
+      echo apiName: $(apiName)
+      echo loadBalancerStaticIpName: $(loadBalancerStaticIpName)
+      echo kubernetesNamespace: $(kubernetesNamespace)
+
 - task: DownloadBuildArtifacts@0
   displayName: 'Download helmPackage artifact'
   inputs:
@@ -102,9 +115,9 @@ steps:
     targetType: 'inline'
     workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
     script: |
-      helm --kubeconfig $(terraformCatalog)/kube.config install identifier-generator-protractor ./identifier-generator-*.tgz \
+      $(Agent.ToolsDirectory)/helm --kubeconfig $(terraformCatalog)/kube.config install identifier-generator-protractor ./identifier-generator-*.tgz \
+        --values ./values.yaml \
         --set namespace=$(kubernetesNamespace) \
-        --set dockerTag=$(imageTag) \
         --set webapiHost=$(apiName) \
         --set webHost=$(appName)
 
@@ -115,18 +128,19 @@ steps:
     targetType: 'inline'
     workingDirectory: '$terraformCatalog'
     script: |
-      terraform init
-      terraform plan \
+      $(Agent.ToolsDirectory)/terraform init
+      $(Agent.ToolsDirectory)/terraform plan \
           -var "credentials_file=$(terraformCatalog)/gcloud-credentials-identifier-generator.json" \
           -var "application_instance_name=$(applicationInstanceName)" \
           -var "zone_dns_name=$(zoneName)" \
           -var "zone_dns=$(zoneDns)." \
           -var "load_balancer_static_ip_name=$(loadBalancerStaticIpName)" \
           -out=plan
-      terraform apply plan
+      $(Agent.ToolsDirectory)/terraform apply plan
 
 - task: Npm@1
   enabled: false
+  continueOnError: true
   displayName: 'Run npm e2e'
   inputs:
     command: 'custom'
@@ -140,7 +154,7 @@ steps:
     targetType: 'inline'
     workingDirectory: '$(terraformCatalog)'
     script: |
-      terraform destroy \
+      $(Agent.ToolsDirectory)/terraform destroy \
           -var "credentials_file=$(terraformCatalog)/gcloud-credentials-identifier-generator.json" \
           -var "application_instance_name=$(applicationInstanceName)" \
           -var "zone_dns_name=$(zoneName)" \
@@ -155,3 +169,4 @@ steps:
     testResultsFiles: |
       **/TEST-*.xml
       **/TESTS-*.xml
+    failTaskOnFailedTests: true
