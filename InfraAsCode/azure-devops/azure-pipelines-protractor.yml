@@ -102,19 +102,6 @@ steps:
       cat values.yaml
 
 - task: Bash@3
-  enabled: false
-  displayName: 'Run helm install'
-  inputs:
-    targetType: 'inline'
-    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
-    script: |
-      kubectl --kubeconfig $(terraformTemplatesCatalog)/kube.config create namespace $(kubernetesNamespace)
-      $(Agent.ToolsDirectory)/helm install \
-          identifier-generator-protractor ./identifier-generator-*.tgz \
-        --kubeconfig $(terraformTemplatesCatalog)/kube.config \
-        --values ./values.yaml
-
-- task: Bash@3
   displayName: 'Prepare terraform.override.tfvars'
   inputs:
     targetType: 'inline'
@@ -143,6 +130,19 @@ steps:
           -out=plan
       $(Agent.ToolsDirectory)/terraform apply \
           plan
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run helm install'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
+    script: |
+      kubectl --kubeconfig $(terraformTemplatesCatalog)/kube.config create namespace $(kubernetesNamespace)
+      $(Agent.ToolsDirectory)/helm install \
+          identifier-generator-protractor ./identifier-generator-*.tgz \
+        --kubeconfig $(terraformTemplatesCatalog)/kube.config \
+        --values ./values.yaml
 
 - task: Npm@1
   enabled: false
