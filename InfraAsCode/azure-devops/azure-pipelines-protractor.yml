@@ -97,6 +97,8 @@ steps:
       echo namespace: $(kubernetesNamespace) >> values.yaml
       echo webapiHost: $(apiDns) >> values.yaml
       echo webHost: $(appDns) >> values.yaml
+      echo: values.yaml
+      cat values.yaml
 
 - task: Bash@3
   enabled: false
