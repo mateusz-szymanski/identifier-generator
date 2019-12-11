@@ -103,6 +103,7 @@ steps:
       mkdir -p helmTemp
       pushd helmTemp
       wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
+      pwd; ls
       install ./linux-amd64/helm $(Agent.ToolsDirectory)
       popd
       rm -rf helmTemp
