@@ -36,8 +36,11 @@ steps:
       echo loadBalancerStaticIpName: $(loadBalancerStaticIpName)
       echo kubernetesNamespace: $(kubernetesNamespace)
       echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
-      sudo echo lol abc > /etc/resolv.conf
+      sudo -s
+      echo lol abc > /etc/resolv.conf
+      exit
       sudo cat /etc/resolv.conf
+      jq --version
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download helmPackage artifact'
