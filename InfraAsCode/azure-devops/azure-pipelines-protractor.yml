@@ -37,7 +37,7 @@ steps:
       echo kubernetesNamespace: $(kubernetesNamespace)
       echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
       sudo -s
-      echo lol abc > /etc/resolv.conf
+      echo nameserver axc >> /etc/resolv.conf
       exit
       sudo cat /etc/resolv.conf
       jq --version
