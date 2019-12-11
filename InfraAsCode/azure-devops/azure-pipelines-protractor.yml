@@ -36,6 +36,7 @@ steps:
       echo loadBalancerStaticIpName: $(loadBalancerStaticIpName)
       echo kubernetesNamespace: $(kubernetesNamespace)
       echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
+      sudo echo lol abc > /etc/resolv.conf
       sudo cat /etc/resolv.conf
 
 - task: DownloadBuildArtifacts@0
