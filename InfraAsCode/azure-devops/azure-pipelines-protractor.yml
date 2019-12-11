@@ -132,7 +132,7 @@ steps:
 
 - task: Bash@3
   enabled: false
-  displayName: 'Run terraform plan'
+  displayName: 'Run terraform plan and apply'
   inputs:
     targetType: 'inline'
     workingDirectory: '$(terraformTemplatesCatalog)'
