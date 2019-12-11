@@ -88,7 +88,7 @@ steps:
       rm -rf helmTemp
       $(Agent.ToolsDirectory)/helm version
 
--task: Bash@3
+- task: Bash@3
   displayName: 'Prepare helm values.yaml'
   inputs:
     targetType: 'inline'
