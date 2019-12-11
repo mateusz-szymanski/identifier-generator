@@ -85,19 +85,3 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'helmPackage'
         publishLocation: 'Container'
-    - task: DownloadBuildArtifacts@0
-      inputs:
-        buildType: 'specific'
-        project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
-        pipeline: '2'
-        specificBuildWithTriggering: true
-        buildVersionToDownload: 'latest'
-        downloadType: 'single'
-        artifactName: 'protractor'
-        downloadPath: '$(System.ArtifactsDirectory)'
-    - task: PublishBuildArtifacts@1
-      displayName: Publish artifacts
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)/protractor'
-        ArtifactName: 'protractor'
-        publishLocation: 'Container'
