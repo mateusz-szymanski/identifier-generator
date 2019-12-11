@@ -115,18 +115,19 @@ steps:
         --values ./values.yaml
 
 - task: Bash@3
-  displayName: 'Prepare terraform.tfvars'
+  displayName: 'Prepare terraform.override.tfvars'
   inputs:
     targetType: 'inline'
     workingDirectory: '$(terraformTemplatesCatalog)'
     script: |
-      echo credentials_file             = $(XXX) >> terraform.tfvars
-      echo application_instance_name    = $(applicationInstanceName) >> terraform.tfvars
-      echo zone_dns_name                = $(zoneName) >> terraform.tfvars
-      echo zone_dns                     = $(zoneDns) >> terraform.tfvars
-      echo load_balancer_static_ip_name = $(loadBalancerStaticIpName) >> terraform.tfvars
-      echo terraform.tfvars:
-      cat terraform.tfvars
+      rm terraform.override.tfvars
+      echo credentials_file             = $(XXX) >> terraform.override.tfvars
+      echo application_instance_name    = $(applicationInstanceName) >> terraform.override.tfvars
+      echo zone_dns_name                = $(zoneName) >> terraform.override.tfvars
+      echo zone_dns                     = $(zoneDns) >> terraform.override.tfvars
+      echo load_balancer_static_ip_name = $(loadBalancerStaticIpName) >> terraform.override.tfvars
+      echo terraform.override.tfvars:
+      cat terraform.override.tfvars
 
 - task: Bash@3
   enabled: false
@@ -135,12 +136,13 @@ steps:
     targetType: 'inline'
     workingDirectory: '$(terraformTemplatesCatalog)'
     script: |
-      $(Agent.ToolsDirectory)/terraform init $(terraformTemplatesCatalog)
+      $(Agent.ToolsDirectory)/terraform init
       $(Agent.ToolsDirectory)/terraform plan \
-          -var-file=./terraform.tfvars \
-          -out=plan \
-          -state=./state
-      $(Agent.ToolsDirectory)/terraform apply plan
+          -var-file=./terraform.override.tfvars \
+          -out=plan
+      $(Agent.ToolsDirectory)/terraform apply \
+          -state=./state \
+          plan
 
 - task: Npm@1
   enabled: false
@@ -159,7 +161,7 @@ steps:
     workingDirectory: '$(terraformTemplatesCatalog)'
     script: |
       $(Agent.ToolsDirectory)/terraform destroy \
-          -var-file=./terraform.tfvars
+          -var-file=./terraform.override.tfvars \
           -state=./state \
           -auto-approve
 
