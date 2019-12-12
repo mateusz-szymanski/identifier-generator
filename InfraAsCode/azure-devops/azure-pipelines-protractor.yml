@@ -37,6 +37,8 @@ steps:
       echo kubernetesNamespace: $(kubernetesNamespace)
       echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
       sudo cat /etc/resolv.conf
+      ls -l /etc/netplan
+      cat /etc/netplan/*
       jq --version
 
 - task: DownloadBuildArtifacts@0
