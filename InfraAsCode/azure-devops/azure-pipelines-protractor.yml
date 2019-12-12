@@ -42,7 +42,7 @@ steps:
       echo ============
       cat /etc/netplan/*
       echo ============
-      jq --version
+      systemd-resolve --status | grep 'DNS Servers' -A2
 
 - task: DownloadBuildArtifacts@0
   displayName: 'Download helmPackage artifact'
