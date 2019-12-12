@@ -38,9 +38,7 @@ steps:
       echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
       sudo cat /etc/resolv.conf
       echo ============
-      ls -l /etc/netplan
-      echo ============
-      cat /etc/netplan/*
+      cat -n /etc/netplan/*
       echo ============
       systemd-resolve --status | grep 'DNS Servers' -A2
 
