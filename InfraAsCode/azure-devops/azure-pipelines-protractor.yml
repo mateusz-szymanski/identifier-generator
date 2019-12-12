@@ -24,6 +24,25 @@ variables:
 steps:
 
 - task: Bash@3
+  enabled: false
+  displayName: 'Configure dns'
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "network:" > /etc/netplan/50-cloud-init.yaml
+      echo "    ethernets:" >> /etc/netplan/50-cloud-init.yaml
+      echo "        eth0:" >> /etc/netplan/50-cloud-init.yaml
+      echo "            dhcp4: true" >> /etc/netplan/50-cloud-init.yaml
+      echo "            dhcp4-overrides:" >> /etc/netplan/50-cloud-init.yaml
+      echo "                route-metric: 100" >> /etc/netplan/50-cloud-init.yaml
+      echo "            match:" >> /etc/netplan/50-cloud-init.yaml
+      echo "                macaddress: 00:0d:3a:b7:a5:9e" >> /etc/netplan/50-cloud-init.yaml
+      echo "            set-name: eth0" >> /etc/netplan/50-cloud-init.yaml
+      echo "            nameservers:" >> /etc/netplan/50-cloud-init.yaml
+      echo "                addresses: [8.8.8.8, 8.8.4.4]" >> /etc/netplan/50-cloud-init.yaml
+      echo "    version: 2" >> /etc/netplan/50-cloud-init.yaml
+
+- task: Bash@3
   inputs:
     targetType: 'inline'
     script: |
@@ -38,6 +57,7 @@ steps:
       echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
       sudo cat /etc/resolv.conf
       echo ============
+      ls /etc/netplan/
       cat -n /etc/netplan/*
       echo ============
       systemd-resolve --status | grep 'DNS Servers' -A2
