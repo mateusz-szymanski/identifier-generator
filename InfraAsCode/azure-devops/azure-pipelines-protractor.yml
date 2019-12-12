@@ -28,6 +28,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
+      sudo -s
       echo "network:" > /etc/netplan/50-cloud-init.yaml
       echo "    ethernets:" >> /etc/netplan/50-cloud-init.yaml
       echo "        eth0:" >> /etc/netplan/50-cloud-init.yaml
@@ -40,6 +41,7 @@ steps:
       echo "            nameservers:" >> /etc/netplan/50-cloud-init.yaml
       echo "                addresses: [8.8.8.8, 8.8.4.4]" >> /etc/netplan/50-cloud-init.yaml
       echo "    version: 2" >> /etc/netplan/50-cloud-init.yaml
+      exit
 
 - task: Bash@3
   inputs:
