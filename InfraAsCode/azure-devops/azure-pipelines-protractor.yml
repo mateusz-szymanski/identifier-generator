@@ -41,6 +41,7 @@ steps:
       echo "            nameservers:" >> /etc/netplan/50-cloud-init.yaml
       echo "                addresses: [8.8.8.8, 8.8.4.4]" >> /etc/netplan/50-cloud-init.yaml
       echo "    version: 2" >> /etc/netplan/50-cloud-init.yaml
+      netplan apply
       exit
 
 - task: Bash@3
