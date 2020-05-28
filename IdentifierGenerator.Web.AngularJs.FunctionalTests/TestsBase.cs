@@ -26,9 +26,18 @@ namespace IdentifierGenerator.Web.AngularJs.FunctionalTests
             WebDriver = new ChromeDriver(currentLocation, options);
         }
 
+        protected virtual void Dispose(bool dispose)
+        {
+            if (dispose)
+            {
+                WebDriver.Quit();
+            }
+        }
+
         public void Dispose()
         {
-            WebDriver.Quit();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
