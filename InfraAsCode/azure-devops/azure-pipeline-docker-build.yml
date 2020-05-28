@@ -1,5 +1,5 @@
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '$(applicationSemanticVersion)-buildNo.$(Build.BuildId)'
 
 stages:
 - stage: Build
@@ -51,6 +51,7 @@ stages:
         buildContext: '$(Build.SourcesDirectory)'
         tags: '$(tag)'
     - task: Kubernetes@1
+      enabled: false
       displayName: Kubernetes login
       inputs:
         connectionType: 'Kubernetes Service Connection'
@@ -62,16 +63,17 @@ stages:
         script: |
           cd $(Agent.BuildDirectory)
           mkdir -p tools/helmExe; cd tools/helmExe
-          wget -qO- https://get.helm.sh/helm-v3.0.0-rc.3-linux-amd64.tar.gz | tar -zxv
+          wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
           $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
     - task: CmdLine@2
       displayName: Helm package
       inputs:
         script: |
           $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm version
-          $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm package -d $(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/InfraAsCode/k8s/identifier-generator
+          $(Agent.BuildDirectory)/tools/helmExe/linux-amd64/helm package -d $(Build.ArtifactStagingDirectory) $(Build.SourcesDirectory)/InfraAsCode/k8s/identifier-generator --app-version $(tag) --version $(tag)
           echo dockerTag: $(tag) > $(Build.ArtifactStagingDirectory)/values.yaml
     - task: Kubernetes@1
+      enabled: false
       displayName: Kubernetes logout
       inputs:
         connectionType: 'Kubernetes Service Connection'
@@ -81,5 +83,5 @@ stages:
       displayName: Publish artifacts
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
+        ArtifactName: 'helmPackage'
         publishLocation: 'Container'

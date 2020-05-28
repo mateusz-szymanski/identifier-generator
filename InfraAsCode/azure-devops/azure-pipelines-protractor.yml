@@ -1,0 +1,202 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-18.04'
+
+variables:
+  applicationInstanceName: 'identifier-generator'
+  loadBalancerStaticIpName: 'load-balancer-static-ip'
+  kubernetesNamespace: 'identifier-generator-protractor'
+  zoneName: 'example-zone'
+  zoneDns: 'example-zone.com'
+  appDns: "$(applicationInstanceName).$(zoneDns)"
+  apiDns: "api.$(appDns)"
+  applicationUrl: 'http://$(appDns)'
+  terraformTemplatesCatalog: "$(Build.SourcesDirectory)/InfraAsCode/terraform"
+  terraformWorkingCatalog: "$(Agent.TempDirectory)"
+
+steps:
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Configure dns'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sudo -s
+      echo "network:" > /etc/netplan/50-cloud-init.yaml
+      echo "    ethernets:" >> /etc/netplan/50-cloud-init.yaml
+      echo "        eth0:" >> /etc/netplan/50-cloud-init.yaml
+      echo "            dhcp4: true" >> /etc/netplan/50-cloud-init.yaml
+      echo "            dhcp4-overrides:" >> /etc/netplan/50-cloud-init.yaml
+      echo "                route-metric: 100" >> /etc/netplan/50-cloud-init.yaml
+      echo "            match:" >> /etc/netplan/50-cloud-init.yaml
+      echo "                macaddress: 00:0d:3a:b7:a5:9e" >> /etc/netplan/50-cloud-init.yaml
+      echo "            set-name: eth0" >> /etc/netplan/50-cloud-init.yaml
+      echo "            nameservers:" >> /etc/netplan/50-cloud-init.yaml
+      echo "                addresses: [8.8.8.8, 8.8.4.4]" >> /etc/netplan/50-cloud-init.yaml
+      echo "    version: 2" >> /etc/netplan/50-cloud-init.yaml
+      netplan apply
+      exit
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo applicationUrl: $(applicationUrl)
+      echo applicationInstanceName: $(applicationInstanceName)
+      echo zoneName: $(zoneName)
+      echo zoneDns: $(zoneDns)
+      echo appDns: $(appDns)
+      echo apiDns: $(apiDns)
+      echo loadBalancerStaticIpName: $(loadBalancerStaticIpName)
+      echo kubernetesNamespace: $(kubernetesNamespace)
+      echo terraformTemplatesCatalog: $(terraformTemplatesCatalog)
+      sudo cat /etc/resolv.conf
+      echo ============
+      ls /etc/netplan/
+      cat -n /etc/netplan/*
+      echo ============
+      systemd-resolve --status | grep 'DNS Servers' -A2
+
+- task: DownloadBuildArtifacts@0
+  displayName: 'Download helmPackage artifact'
+  inputs:
+    buildType: 'specific'
+    project: '793fb093-17e0-4924-82e3-21ba48b0fbd8'
+    pipeline: '3'
+    specificBuildWithTriggering: true
+    buildVersionToDownload: 'latest'
+    downloadType: 'single'
+    artifactName: 'helmPackage'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: Npm@1
+  displayName: 'Run npm install'
+  inputs:
+    workingDir: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
+    command: 'install'
+
+- task: Bash@3
+  displayName: 'Update web drivers'
+  inputs:
+    workingDirectory: '$(Build.SourcesDirectory)/IdentifierGenerator.Web.Angular'
+    targetType: 'inline'
+    script: |
+      node node_modules/protractor/bin/webdriver-manager update
+
+- task: Bash@3
+  displayName: 'Install terraform tool'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(Agent.TempDirectory)'
+    script: |
+      wget https://releases.hashicorp.com/terraform/0.12.17/terraform_0.12.17_linux_amd64.zip -O terraform.zip
+      unzip terraform.zip
+      install terraform $(Agent.ToolsDirectory)
+      rm terraform terraform.zip
+      $(Agent.ToolsDirectory)/terraform --version
+  
+- task: Bash@3
+  displayName: 'Install helm tool'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(Agent.TempDirectory)'
+    script: |
+      mkdir -p helmTemp
+      pushd helmTemp
+      wget -qO- https://get.helm.sh/helm-v3.0.1-linux-amd64.tar.gz | tar -zxv
+      install ./linux-amd64/helm $(Agent.ToolsDirectory)
+      popd
+      rm -rf helmTemp
+      $(Agent.ToolsDirectory)/helm version
+
+- task: Bash@3
+  displayName: 'Prepare helm values.yaml'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
+    script: |
+      echo namespace: $(kubernetesNamespace) >> values.yaml
+      echo webapiHost: $(apiDns) >> values.yaml
+      echo webHost: $(appDns) >> values.yaml
+      echo values.yaml:
+      cat values.yaml
+
+- task: Bash@3
+  displayName: 'Prepare terraform.override.tfvars'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(terraformTemplatesCatalog)'
+    script: |
+      rm terraform.override.tfvars
+      echo $(cloudCredentials) > cloudCredentials.json
+      echo credentials_file             = cloudCredentials.json >> terraform.override.tfvars
+      echo application_instance_name    = $(applicationInstanceName) >> terraform.override.tfvars
+      echo zone_dns_name                = $(zoneName) >> terraform.override.tfvars
+      echo zone_dns                     = $(zoneDns) >> terraform.override.tfvars
+      echo load_balancer_static_ip_name = $(loadBalancerStaticIpName) >> terraform.override.tfvars
+      echo terraform.override.tfvars:
+      cat terraform.override.tfvars
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run terraform plan and apply'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(terraformTemplatesCatalog)'
+    script: |
+      $(Agent.ToolsDirectory)/terraform init
+      $(Agent.ToolsDirectory)/terraform plan \
+          -var-file=./terraform.override.tfvars \
+          -out=plan
+      $(Agent.ToolsDirectory)/terraform apply \
+          plan
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run helm install'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(System.ArtifactsDirectory)/helmPackage'
+    script: |
+      kubectl --kubeconfig $(terraformTemplatesCatalog)/kube.config create namespace $(kubernetesNamespace)
+      $(Agent.ToolsDirectory)/helm install \
+          identifier-generator-protractor ./identifier-generator-*.tgz \
+        --kubeconfig $(terraformTemplatesCatalog)/kube.config \
+        --values ./values.yaml
+
+- task: Npm@1
+  enabled: false
+  continueOnError: true
+  displayName: 'Run npm e2e'
+  inputs:
+    command: 'custom'
+    workingDir: '$(Build.SourcesDirectory)'
+    customCommand: 'run e2e -- --protractor-config=./e2e/protractor-ci.conf.js --base-url=$(applicationUrl) --dev-server-target= --reporters=junit'
+
+- task: Bash@3
+  enabled: false
+  displayName: 'Run terraform destroy'
+  inputs:
+    targetType: 'inline'
+    workingDirectory: '$(terraformTemplatesCatalog)'
+    script: |
+      $(Agent.ToolsDirectory)/terraform destroy \
+          -var-file=./terraform.override.tfvars \
+          -auto-approve
+
+- task: PublishTestResults@2
+  displayName: 'Publish tests'
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: |
+      **/TEST-*.xml
+      **/TESTS-*.xml
+    failTaskOnFailedTests: true
