@@ -18,20 +18,20 @@ namespace IdentifierGenerator.WebApi.HealthChecks
             _serviceProvider = serviceProvider;
         }
 
-        public Task<HealthCheckResult> CheckHealthAsync(
+        public async Task<HealthCheckResult> CheckHealthAsync(
             HealthCheckContext context,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken)
         {
             using (var serviceScope = _serviceProvider.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<TDbContext>();
-                if (dbContext.Database.GetPendingMigrations().Any())
-                {
-                    return Task.FromResult(HealthCheckResult.Unhealthy("There are some migrations pending"));
-                }
+                var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync(cancellationToken);
+
+                if (pendingMigrations.Any())
+                    return HealthCheckResult.Unhealthy("There are some migrations pending");
             }
 
-            return Task.FromResult(HealthCheckResult.Healthy("A healthy result"));
+            return HealthCheckResult.Healthy("A healthy result");
         }
     }
 }
