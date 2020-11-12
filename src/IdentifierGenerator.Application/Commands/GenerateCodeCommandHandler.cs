@@ -26,7 +26,7 @@ namespace IdentifierGenerator.Application.Commands
                 _identifierRepository.Add(identifier);
             }
 
-            var identifierGenerated = identifier.MoveToNextValue();
+            var identifierGenerated = identifier.IncrementValue();
 
             _identifierRepository.Add(identifierGenerated);
             await _identifierRepository.SaveChanges(cancellationToken);

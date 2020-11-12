@@ -30,7 +30,7 @@ namespace IdentifierGenerator.Model.Domain
         public string FactoryCode { get; private set; }
         public string CategoryCode { get; private set; }
 
-        public IdentifierGenerated MoveToNextValue() // Rename
+        public IdentifierGenerated IncrementValue()
         {
             ++Value;
             return new IdentifierGenerated(GlobalId, GetValueCode());
