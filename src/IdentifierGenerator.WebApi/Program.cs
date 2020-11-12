@@ -46,9 +46,7 @@ namespace IdentifierGenerator.WebApi
             config.AddEnvironmentVariables();
 
             if (args is not null)
-            {
                 config.AddCommandLine(args);
-            }
         }
     }
 }

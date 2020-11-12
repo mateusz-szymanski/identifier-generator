@@ -31,8 +31,10 @@ namespace IdentifierGenerator.Application.UnitTests
 
             var databaseFilePath = Path.Combine(databaseCatalog, databaseName);
 
-            var sqliteConnectionStringBuilder = new SqliteConnectionStringBuilder();
-            sqliteConnectionStringBuilder.DataSource = databaseFilePath;
+            var sqliteConnectionStringBuilder = new SqliteConnectionStringBuilder()
+            {
+                DataSource = databaseFilePath
+            };
 
             return sqliteConnectionStringBuilder.ConnectionString;
         }

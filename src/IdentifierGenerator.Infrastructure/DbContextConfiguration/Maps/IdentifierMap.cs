@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IdentifierGenerator.Infrastructure.DbContextConfiguration.Maps
 {
-    internal class IdentifierMap : IEntityTypeConfiguration<Identifier>
+    class IdentifierMap : IEntityTypeConfiguration<Identifier>
     {
         public void Configure(EntityTypeBuilder<Identifier> builder)
         {

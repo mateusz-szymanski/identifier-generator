@@ -5,7 +5,7 @@ using System;
 
 namespace IdentifierGenerator.Infrastructure.DbContextConfiguration.Maps
 {
-    internal class IdentifierGeneratedMap : IEntityTypeConfiguration<IdentifierGenerated>
+    class IdentifierGeneratedMap : IEntityTypeConfiguration<IdentifierGenerated>
     {
         public void Configure(EntityTypeBuilder<IdentifierGenerated> builder)
         {

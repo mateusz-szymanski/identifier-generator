@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace IdentifierGenerator.Infrastructure.Queries
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Dependency injection")]
-    internal class AllIdentifiersQueryHandler : IRequestHandler<AllIdentifiersQuery, AllIdentifiersQueryResponse>
+    class AllIdentifiersQueryHandler : IRequestHandler<AllIdentifiersQuery, AllIdentifiersQueryResponse>
     {
         private readonly IdentifierGeneratorDbContext _dbContext;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace IdentifierGenerator.Application.Commands
 {
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Dependency injection")]
-    internal class GenerateCodeCommandHandler : IRequestHandler<GenerateCodeCommand, GenerateCodeCommandResponse>
+    class GenerateCodeCommandHandler : IRequestHandler<GenerateCodeCommand, GenerateCodeCommandResponse>
     {
         private readonly IIdentifierRepository _identifierRepository;
 
