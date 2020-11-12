@@ -32,7 +32,7 @@ namespace IdentifierGenerator.WebApi
             if (env.IsDevelopment())
             {
                 var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
-                if (appAssembly != null)
+                if (appAssembly is not null)
                 {
                     config.AddUserSecrets(appAssembly, optional: true);
                 }
@@ -45,7 +45,7 @@ namespace IdentifierGenerator.WebApi
 
             config.AddEnvironmentVariables();
 
-            if (args != null)
+            if (args is not null)
             {
                 config.AddCommandLine(args);
             }
