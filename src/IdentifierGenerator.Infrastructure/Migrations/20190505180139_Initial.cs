@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿#pragma warning disable CA1062 // Validate arguments of public methods
+
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 

@@ -1,9 +1,5 @@
-﻿using IdentifierGenerator.Application.Commands;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IdentifierGenerator.Application.UnitTests.Utilities

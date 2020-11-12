@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Diagnostics.CodeAnalysis;
 
 namespace IdentifierGenerator.WebApi
 {
@@ -20,7 +21,7 @@ namespace IdentifierGenerator.WebApi
 
         public IConfiguration Configuration { get; }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices([NotNull] IServiceCollection services)
         {
             services
                 .AddApplicationServices()
@@ -41,7 +42,7 @@ namespace IdentifierGenerator.WebApi
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure([NotNull] IApplicationBuilder app, [NotNull] IWebHostEnvironment env)
         {
             app.UseHealthChecks("/health");
 

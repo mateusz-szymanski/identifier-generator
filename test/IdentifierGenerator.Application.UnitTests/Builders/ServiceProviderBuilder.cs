@@ -1,8 +1,6 @@
-﻿using IdentifierGenerator.Application.IoC;
-using IdentifierGenerator.Application.UnitTests.Database;
+﻿using IdentifierGenerator.Application.UnitTests.Database;
 using IdentifierGenerator.Application.UnitTests.IoC;
 using IdentifierGenerator.Infrastructure.DbContextConfiguration;
-using IdentifierGenerator.Infrastructure.IoC;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
