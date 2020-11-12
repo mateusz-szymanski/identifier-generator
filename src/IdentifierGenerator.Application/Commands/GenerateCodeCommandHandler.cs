@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace IdentifierGenerator.Application.Commands
 {
-    class GenerateCodeCommandHandler : IRequestHandler<GenerateCodeCommand, GenerateCodeCommandResponse>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Dependency injection")]
+    internal class GenerateCodeCommandHandler : IRequestHandler<GenerateCodeCommand, GenerateCodeCommandResponse>
     {
         private readonly IIdentifierRepository _identifierRepository;
 
@@ -17,7 +18,7 @@ namespace IdentifierGenerator.Application.Commands
 
         public async Task<GenerateCodeCommandResponse> Handle(GenerateCodeCommand request, CancellationToken cancellationToken)
         {
-            var identifier = await _identifierRepository.GetIdentifierFor(request.FactoryCode, request.CategoryCode);
+            var identifier = await _identifierRepository.GetIdentifierFor(request.FactoryCode, request.CategoryCode, cancellationToken);
 
             if (identifier is null)
             {
@@ -28,7 +29,7 @@ namespace IdentifierGenerator.Application.Commands
             var identifierGenerated = identifier.MoveToNextValue();
 
             _identifierRepository.Add(identifierGenerated);
-            await _identifierRepository.SaveChanges();
+            await _identifierRepository.SaveChanges(cancellationToken);
 
             return new GenerateCodeCommandResponse(identifierGenerated.Code);
         }

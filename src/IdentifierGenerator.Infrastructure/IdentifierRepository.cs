@@ -3,6 +3,7 @@ using IdentifierGenerator.Infrastructure.DbContextConfiguration;
 using IdentifierGenerator.Model.Domain;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace IdentifierGenerator.Infrastructure
@@ -26,18 +27,18 @@ namespace IdentifierGenerator.Infrastructure
             _dbContext.IdentifierGenerated.Add(identifierGenerated);
         }
 
-        public async Task<Identifier> GetIdentifierFor(string factoryCode, string categoryCode)
+        public async Task<Identifier> GetIdentifierFor(string factoryCode, string categoryCode, CancellationToken cancellationToken)
         {
             var result = await (from identifier in _dbContext.Identifier
                                 where identifier.FactoryCode == factoryCode && identifier.CategoryCode == categoryCode
-                                select identifier).SingleOrDefaultAsync();
+                                select identifier).SingleOrDefaultAsync(cancellationToken);
 
             return result;
         }
 
-        public Task SaveChanges()
+        public Task SaveChanges(CancellationToken cancellationToken)
         {
-            return _dbContext.SaveChangesAsync();
+            return _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

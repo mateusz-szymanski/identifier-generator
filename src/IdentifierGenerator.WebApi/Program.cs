@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace IdentifierGenerator.WebApi
 {
-    public class Program
+    public sealed class Program
     {
         public static void Main(string[] args)
         {

@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace IdentifierGenerator.Infrastructure.Queries
 {
-    public class AllIdentifiersQueryHandler : IRequestHandler<AllIdentifiersQuery, AllIdentifiersQueryResponse>
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Dependency injection")]
+    internal class AllIdentifiersQueryHandler : IRequestHandler<AllIdentifiersQuery, AllIdentifiersQueryResponse>
     {
         private readonly IdentifierGeneratorDbContext _dbContext;
 
@@ -26,7 +27,7 @@ namespace IdentifierGenerator.Infrastructure.Queries
                                          FactoryCode = i.FactoryCode,
                                          CategoryCode = i.CategoryCode,
                                          Value = i.Value
-                                     }).ToListAsync();
+                                     }).ToListAsync(cancellationToken);
 
             return new AllIdentifiersQueryResponse(identifiers);
         }

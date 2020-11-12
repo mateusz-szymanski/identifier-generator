@@ -49,7 +49,7 @@ namespace IdentifierGenerator.WebApi
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    var context = serviceScope.ServiceProvider.GetService<IdentifierGeneratorDbContext>();
+                    var context = serviceScope.ServiceProvider.GetRequiredService<IdentifierGeneratorDbContext>();
                     context.Database.Migrate();
                 }
             }

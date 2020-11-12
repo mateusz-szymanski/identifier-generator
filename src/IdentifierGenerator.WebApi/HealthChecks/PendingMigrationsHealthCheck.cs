@@ -24,7 +24,7 @@ namespace IdentifierGenerator.WebApi.HealthChecks
         {
             using (var serviceScope = _serviceProvider.CreateScope())
             {
-                var dbContext = serviceScope.ServiceProvider.GetService<TDbContext>();
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<TDbContext>();
                 if (dbContext.Database.GetPendingMigrations().Any())
                 {
                     return Task.FromResult(HealthCheckResult.Unhealthy("There are some migrations pending"));

@@ -1,4 +1,4 @@
-using IdentifierGenerator.Application.Commands;
+﻿using IdentifierGenerator.Application.Commands;
 using IdentifierGenerator.Application.UnitTests.Utilities;
 using System.Threading.Tasks;
 using Xunit;
