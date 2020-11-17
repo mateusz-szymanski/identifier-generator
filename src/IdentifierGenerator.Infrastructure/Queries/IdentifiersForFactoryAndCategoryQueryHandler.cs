@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace IdentifierGenerator.Infrastructure.Queries
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Dependency injection")]
     class IdentifiersForFactoryAndCategoryQueryHandler : IRequestHandler<IdentifiersForFactoryAndCategoryQuery,
         IdentifiersForFactoryAndCategoryQueryResponse>
     {
