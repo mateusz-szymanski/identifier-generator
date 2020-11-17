@@ -1,15 +1,16 @@
-version: '3.7'
+version: '3.8'
 
 services:
   webapi:
     environment:
+      - ConnectionStrings__IdentifierGeneratorContext=Server=sqldb;Database=IdentifierGenerator;User Id=sa;Password=kask7HsAzaXzG;
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
       #- ASPNETCORE_URLS=https://+:443;http://+:80
       #- ASPNETCORE_HTTPS_PORT=44332
-    ports:
-      - "57327:80"
+    #ports:
+      #- "57327:80"
       #- "44332:443"
-    volumes:
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    #volumes:
+      #- ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      #- ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

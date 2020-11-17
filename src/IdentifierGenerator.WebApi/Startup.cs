@@ -44,8 +44,6 @@ namespace IdentifierGenerator.WebApi
 
         public void Configure([NotNull] IApplicationBuilder app, [NotNull] IWebHostEnvironment env)
         {
-            app.UseHealthChecks("/health");
-
             if (env.IsDevelopment())
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -71,6 +69,10 @@ namespace IdentifierGenerator.WebApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/health", new()
+                {
+                    AllowCachingResponses = false
+                });
                 endpoints.MapControllers();
             });
         }

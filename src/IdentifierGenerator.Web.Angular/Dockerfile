@@ -1,6 +1,6 @@
 FROM node:12.13-alpine AS builder
 WORKDIR /app
-COPY ./IdentifierGenerator.Web.Angular .
+COPY ./src/IdentifierGenerator.Web.Angular .
 RUN npm install && \
     npm run build -- --configuration=production
 

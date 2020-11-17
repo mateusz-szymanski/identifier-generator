@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   webapi:
@@ -7,28 +7,30 @@ services:
       - sqldb
     build:
       context: ../..
-      dockerfile: IdentifierGenerator.WebApi/Dockerfile
+      dockerfile: src/IdentifierGenerator.WebApi/Dockerfile
     ports:
-      - 8080:80
+      - 8180:80
+
   nginx-ng:
     image: identifier-generator/nginx-ng
     depends_on:
       - webapi
     build:
       context: ../..
-      dockerfile: IdentifierGenerator.Web.Angular/Dockerfile
+      dockerfile: src/IdentifierGenerator.Web.Angular/Dockerfile
     ports:
-      - 8081:80
+      - 8080:80
+
   sqldb:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    image: mcr.microsoft.com/mssql/server:2019-CU8-ubuntu-16.04
     environment:
         ACCEPT_EULA: "Y"
         SA_PASSWORD: "kask7HsAzaXzG"
         MSSQL_PID: "Express"
     volumes:
       - sqlvolume:/var/opt/mssql
-#    ports:
-#      - 1433:1433
+    ports:
+      - 1433:1433
 
 volumes:
   sqlvolume:
