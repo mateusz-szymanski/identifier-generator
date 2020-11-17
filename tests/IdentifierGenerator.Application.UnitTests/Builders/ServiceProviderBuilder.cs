@@ -24,7 +24,7 @@ namespace IdentifierGenerator.Application.UnitTests
         private static string PrepareSqliteConnectionString()
         {
             var databaseCatalog = "SqliteTestDatabases";
-            var databaseName = $"IdentifierGenerator-{Guid.NewGuid()}";
+            var databaseName = $"{Guid.NewGuid()}.db";
 
             if (!Directory.Exists(databaseCatalog))
                 Directory.CreateDirectory(databaseCatalog);

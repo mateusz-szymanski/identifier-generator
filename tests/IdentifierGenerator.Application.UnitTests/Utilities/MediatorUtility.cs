@@ -18,9 +18,7 @@ namespace IdentifierGenerator.Application.UnitTests.Utilities
             using (var serviceScope = _rootServiceProvider.CreateScope())
             {
                 var mediator = serviceScope.ServiceProvider.GetRequiredService<IMediator>();
-                var response = await mediator.Send(request);
-
-                return response;
+                return await mediator.Send(request);
             }
         }
     }
