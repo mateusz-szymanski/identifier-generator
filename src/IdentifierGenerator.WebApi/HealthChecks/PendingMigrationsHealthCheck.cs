@@ -22,16 +22,15 @@ namespace IdentifierGenerator.WebApi.HealthChecks
             HealthCheckContext context,
             CancellationToken cancellationToken)
         {
-            using (var serviceScope = _serviceProvider.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<TDbContext>();
-                var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync(cancellationToken);
+            using var serviceScope = _serviceProvider.CreateScope();
 
-                if (pendingMigrations.Any())
-                    return HealthCheckResult.Unhealthy("There are some migrations pending");
-            }
+            var dbContext = serviceScope.ServiceProvider.GetRequiredService<TDbContext>();
+            var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync(cancellationToken);
 
-            return HealthCheckResult.Healthy("A healthy result");
+            if (pendingMigrations.Any())
+                return HealthCheckResult.Unhealthy("There are some migrations pending");
+
+            return HealthCheckResult.Healthy("No pending migrations");
         }
     }
 }

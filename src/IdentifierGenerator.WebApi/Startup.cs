@@ -1,4 +1,5 @@
-﻿using IdentifierGenerator.Application.IoC;
+﻿using HealthChecks.UI.Client;
+using IdentifierGenerator.Application.IoC;
 using IdentifierGenerator.Infrastructure.DbContextConfiguration;
 using IdentifierGenerator.Infrastructure.IoC;
 using IdentifierGenerator.WebApi.HealthChecks;
@@ -46,11 +47,9 @@ namespace IdentifierGenerator.WebApi
         {
             if (env.IsDevelopment())
             {
-                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                {
-                    var context = serviceScope.ServiceProvider.GetRequiredService<IdentifierGeneratorDbContext>();
-                    context.Database.Migrate();
-                }
+                using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                var context = serviceScope.ServiceProvider.GetRequiredService<IdentifierGeneratorDbContext>();
+                context.Database.Migrate();
             }
 
             if (env.IsDevelopment())
@@ -71,7 +70,8 @@ namespace IdentifierGenerator.WebApi
             {
                 endpoints.MapHealthChecks("/health", new()
                 {
-                    AllowCachingResponses = false
+                    AllowCachingResponses = false,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
                 });
                 endpoints.MapControllers();
             });
