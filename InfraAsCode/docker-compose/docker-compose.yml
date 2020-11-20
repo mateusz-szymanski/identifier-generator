@@ -31,6 +31,17 @@ services:
       - sqlvolume:/var/opt/mssql
     ports:
       - 1433:1433
+      
+  tools-health-check-watchdog:
+    image: identifier-generator/tools-health-check-watchdog
+    build:
+      context: ../..
+      dockerfile: src/Tools.HealthCheckWatchdog/Dockerfile
+    environment:
+      HealthChecks-UI__HealthChecks__0__Name: Identifier Generator
+      HealthChecks-UI__HealthChecks__0__Uri: http://webapi/health/ready
+    ports:
+      - 8280:80
 
 volumes:
   sqlvolume:

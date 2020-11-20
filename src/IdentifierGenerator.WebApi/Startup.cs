@@ -2,7 +2,7 @@
 using IdentifierGenerator.Application.IoC;
 using IdentifierGenerator.Infrastructure.DbContextConfiguration;
 using IdentifierGenerator.Infrastructure.IoC;
-using IdentifierGenerator.WebApi.HealthChecks;
+using IdentifierGenerator.WebApi.CustomHealthChecks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +31,8 @@ namespace IdentifierGenerator.WebApi
             services.AddControllers();
 
             services.AddHealthChecks()
+                .AddProcessAllocatedMemoryHealthCheck(maximumMegabytesAllocated: 100)
+                .AddCheck<RandomHealthCheck>("random number")
                 .AddDbContextCheck<IdentifierGeneratorDbContext>("dbContext")
                 .AddCheck<PendingMigrationsHealthCheck<IdentifierGeneratorDbContext>>("pendingMigrations");
 
@@ -66,12 +68,17 @@ namespace IdentifierGenerator.WebApi
 
             //app.UseAuthorization();
 
+            app.UseHealthChecksPrometheusExporter("/my-health-metrics");
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/health", new()
+                endpoints.MapHealthChecks("/health/ready", new()
                 {
-                    AllowCachingResponses = false,
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecks("/health/live", new()
+                {
+                    Predicate = _ => false
                 });
                 endpoints.MapControllers();
             });

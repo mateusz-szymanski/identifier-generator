@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace IdentifierGenerator.WebApi.HealthChecks
+namespace IdentifierGenerator.WebApi.CustomHealthChecks
 {
     public class PendingMigrationsHealthCheck<TDbContext> : IHealthCheck
         where TDbContext : DbContext
